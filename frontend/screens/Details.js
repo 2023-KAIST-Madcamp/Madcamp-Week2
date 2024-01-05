@@ -3,11 +3,34 @@ import { Text, View , Button} from 'react-native'
 import { useData } from '../context/DataContext'
 import axios from 'axios';
 
+// {
+//     "name": "Jinsuk Park",
+//     "age": 25
+// }
+
+
+// POST - Update MongoDB (Initiated when button is pressed)
+const sendDataToBackend = async() => {
+    const dataToSend = {
+        name: 'Jinsuk Park',
+        age: 25,
+      };
+
+try {
+    const response = await axios.post('http://143.248.192.155:5000/login', dataToSend)
+    console.log(response.data); // Log the response from the server
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+
+
 export default function Details({ navigation}) {
 
     const { selectedItem } = useData();
     const [data, setData] = useState()
-
     
 
     useEffect(() => {
@@ -47,7 +70,7 @@ export default function Details({ navigation}) {
         onPress={() => navigation.navigate('Details')}
       />
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Button title="Send data to backend" onPress={sendDataToBackend} />
       </View>
     )
   }
