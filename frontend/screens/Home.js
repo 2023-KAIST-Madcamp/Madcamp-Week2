@@ -20,11 +20,10 @@ export default function Home({navigation}) {
         {title: 'Jdjfdkfjdkl', rating: 3, body: 'fjkdlfjdklfdfdfj', key: '2'}
     ]) 
 
-    const Stack = createNativeStackNavigator();
+    // const Stack = createNativeStackNavigator();
 
 
     return (
-      <NavigationContainer>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
         <FlatList
@@ -42,6 +41,5 @@ export default function Home({navigation}) {
         onPress={handleStart}
       /> */}
       </View>
-      </NavigationContainer>
     );
   }
