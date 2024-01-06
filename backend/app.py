@@ -63,7 +63,27 @@ def receive_token():
 
         kakao_token = token_response.json()
         print(kakao_token)
-        return jsonify(kakao_token)
+
+        headers= {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Bearer ' + str(kakao_token['access_token'])
+        }
+
+
+        user_url = "https://kapi.kakao.com/v2/user/me"
+
+        response = requests.request("GET", user_url, headers=headers)
+        print("This is the response")
+        print(response.text)
+
+        
+
+        
+    
+        
+
+        return jsonify(response.text)
 
 @app.route('/', methods=['GET'])
 def hello():
