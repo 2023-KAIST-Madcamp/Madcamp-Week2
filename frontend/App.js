@@ -11,6 +11,8 @@ import Home from './screens/Home';
 import Details from './screens/Details';
 import Login from './screens/Login';
 import Question from './screens/Question';
+import Profile from './screens/Profile'
+import Result from './screens/Result'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -20,7 +22,15 @@ function App() {
   return (
     <DataProvider>
       <NavigationContainer>
-        <Tab.Navigator 
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name = "Home" component={Home}/>
+          <Stack.Screen name = "Details" component={Details}/>
+          <Stack.Screen name = "Login" component={Login}/>
+          <Stack.Screen name = "Profile" component={Profile}/>
+          <Stack.Screen name = "Question" component={Question}/>
+          <Stack.Screen name = "Result" component={Result}/>
+        </Stack.Navigator>
+        {/* <Tab.Navigator 
             initialRouteName="Home"
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
@@ -49,7 +59,7 @@ function App() {
             name="Login" 
             component={Login}
             options={{title: 'Login'}} />
-        </Tab.Navigator>
+        </Tab.Navigator> */}
       </NavigationContainer>
     </DataProvider>
   );
