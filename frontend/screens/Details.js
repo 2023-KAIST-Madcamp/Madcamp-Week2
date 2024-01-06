@@ -4,12 +4,6 @@ import { useData } from '../context/DataContext'
 import axios from 'axios';
 import { DataProvider } from '../context/DataContext'
 
-// {
-//     "name": "Jinsuk Park",
-//     "age": 25
-// }
-
-
 // POST - Update MongoDB (Initiated when button is pressed)
 const sendDataToBackend = async() => {
     const dataToSend = {
@@ -58,16 +52,7 @@ export default function Details({ navigation}) {
     return (
 
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {/* <View>
-            {userData ? (
-                <View>
-                    <Text>Data from user:</Text>
-                    <Text>{userData[0]}</Text>
-                </View>
-            ) : (
-                <Text>Loading...</Text>
-            )}
-    </View> */}
+
         <View>
             {data ? (
                 <View>

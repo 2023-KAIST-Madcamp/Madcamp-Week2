@@ -11,46 +11,25 @@ import Home from './screens/Home';
 import Details from './screens/Details';
 import Login from './screens/Login';
 import Question from './screens/Question';
+import Profile from './screens/Profile'
+import Result from './screens/Result'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 
 function App() {
-
   return (
     <DataProvider>
       <NavigationContainer>
-        <Tab.Navigator 
-            initialRouteName="Home"
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-                let rn = route.name;
-    
-                // You can return any component that you like here!
-                return <Ionicons name={iconName} size={size} color={color} />;
-              },
-            })}
-            tabBarOptions={{
-              activeTintColor: 'tomato',
-              inactiveTintColor: 'grey',
-              labelStyle: { paddingBottom: 10, fontSize: 10 },
-              style: { padding: 10, height: 70}
-            }}>
-          <Tab.Screen 
-            name="Home" 
-            component={Home}
-            options={{title: 'Home'}} />
-          <Tab.Screen 
-            name="Details" 
-            component={Details}
-            options={{title: 'Details'}} />
-          <Tab.Screen 
-            name="Login" 
-            component={Login}
-            options={{title: 'Login'}} />
-        </Tab.Navigator>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name = "Home" component={Home}/>
+          <Stack.Screen name = "Details" component={Details}/>
+          <Stack.Screen name = "Login" component={Login}/>
+          <Stack.Screen name = "Profile" component={Profile}/>
+          <Stack.Screen name = "Question" component={Question}/>
+          <Stack.Screen name = "Result" component={Result}/>
+        </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>
   );

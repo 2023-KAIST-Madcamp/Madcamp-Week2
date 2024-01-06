@@ -5,15 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useData } from '../context/DataContext';
 
 export default function Home({navigation}) {
-    const { setSelectedItem } = useData();
-    const handlePress = (item) => {
-        setSelectedItem(item);
-        navigation.navigate('Details');
-      };
+    // const { setSelectedItem } = useData();
+    // const handlePress = (item) => {
+    //     setSelectedItem(item);
+    //     navigation.navigate('Details');
+    //   };
 
-      // const handleStart = () => {
-      //   navigation.navigate('Question')
-      // }
+      const handleStart = () => {
+        navigation.navigate('Question')
+      }
 
     const [reviews, setReviews] = useState([
         {title: 'Jinsuk Park is my name', rating: 5, body: 'fjkdlfjdklfj', key: '1'},
@@ -26,7 +26,7 @@ export default function Home({navigation}) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
-        <FlatList
+        {/* <FlatList
             data={reviews}
             renderItem={({item})=> (
                 <TouchableOpacity onPress={handlePress(item)}>
@@ -35,11 +35,11 @@ export default function Home({navigation}) {
 
                     </Text>
                 </TouchableOpacity>
-            )} />
-        {/* <Button
+            )} /> */}
+        <Button
         title="Start"
         onPress={handleStart}
-      /> */}
+      />
       </View>
     );
   }
