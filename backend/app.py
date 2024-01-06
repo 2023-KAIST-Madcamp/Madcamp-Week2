@@ -13,6 +13,9 @@ db = client['mytrip']  # Replace 'your_database' with your database name
 collection = db['flask']  # Replace 'your_collection' with your collection name
 
 
+answers = []
+result_list = []
+
 @app.route('/login', methods=['POST'])
 def index():
     # Perform MongoDB operations here using 'collection'
@@ -28,6 +31,26 @@ def index():
         collection.insert_one({'name': name, 'age': age})
         
         return 'Data received and updated in MongoDB!'
+
+@app.route('/recommend', methods=['POST'])
+def recommend_algo():
+    answers = request.get_json()
+    print(answers)
+
+    print(type(answers))
+
+    print(answers[0])
+    print(answers[0][0])
+
+    return "Got answers"
+
+@app.route('/data', methods=['GET'])
+def get_data():
+
+    return jsonify(result_list)
+
+
+
 
 
 @app.route('/user', methods=['POST'])
