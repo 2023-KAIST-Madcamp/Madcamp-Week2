@@ -6,7 +6,7 @@ function Result({navigation}) {
 
     const initialRegion = {
         latitude: 36.5, // Center latitude
-        longitude: 30, // Center longitude
+        longitude: 127, // Center longitude
         latitudeDelta: 360, // Zoom level. Adjust as needed for your view
         longitudeDelta: 360, // Zoom level. Adjust as needed for your view
       };
@@ -32,11 +32,18 @@ function Result({navigation}) {
 
   const styles = StyleSheet.create({
     container: {
-    //   flex: 1,
-    },
-    map: {
-      width: '100%',
-      height: '100%',
-    },
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      mapContainer: {
+        width: '80%', // Adjust the width of the container
+        height: '50%', // Adjust the height of the container
+        borderRadius: 10,
+        overflow: 'hidden',
+      },
+      map: {
+        flex: 1,
+      },
   });
 export default Result
