@@ -9,7 +9,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './screens/Home';
 import Details from './screens/Details';
-import Login from './screens/Login';
 import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
@@ -22,7 +21,7 @@ function App() {
   return (
     <DataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name = "Home" component={Home}/>
           <Stack.Screen name = "Details" component={Details}/>
           <Stack.Screen name = "Login" component={Login}/>
