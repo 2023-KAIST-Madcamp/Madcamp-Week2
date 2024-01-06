@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View , Button} from 'react-native'
 import {WebView} from 'react-native-webview'
+import qs from 'qs';
+import axios from 'axios';
+
+
 
 const REST_API_KEY = '12bbac899de85f22c958c86e7317727d'
 const REDIRECT_URI = 'https://example.com/oauthtravel'
@@ -30,7 +34,8 @@ const requestToken = async (code) => {
       if (result === 'stored') {
         const user = await getData('user');
         dispatch(read_S(user));
-        await navigation.navigate('Main');
+        await navigation.navigate('Home');
+        console.log(value);
       }
     } catch (e) {
       console.log(e);
