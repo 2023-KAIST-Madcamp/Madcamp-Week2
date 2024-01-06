@@ -39,7 +39,7 @@ export default function Details({ navigation}) {
 
     const fetchData = async() => {
         try {
-            const response = await axios.get('http://143.248.197.67:5001/') // This needs to be local ip address
+            const response = await axios.get('http://143.248.192.155:5000/') // This needs to be local ip address
             console.log("This is our data ")
             console.log(response.data)
 
