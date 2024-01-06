@@ -17,6 +17,7 @@ const Stack = createNativeStackNavigator();
 
 
 function App() {
+
   return (
     <DataProvider>
       <NavigationContainer>

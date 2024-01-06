@@ -2,6 +2,8 @@ import React from 'react';
 import { WebView } from 'react-native-webview';
 import qs from 'qs'
 import axios from 'axios'
+import { useData } from '../context/DataContext';
+import { DataProvider } from '../context/DataContext';
 
 const REST_API_KEY = '12bbac899de85f22c958c86e7317727d';
 const REDIRECT_URI = 'https://example.com/oauthtravel';
@@ -21,14 +23,18 @@ const sendTokenToBackend = async (options) => {
       body: JSON.stringify({grant_type: options.grant_type, client_id: options.client_id, 
         redirect_uri: options.redirect_uri, code: options.code}),
     });
-    // console.log(response.status)
-    // console.log("This is the response body: " + response.body)
 
     if (response.ok) {
       // Request was successful
       const responseData = await response.json();
       // Handle response data if needed
       console.log('Token sent to backend:', responseData);
+      
+      console.log(typeof(responseData))
+      console.log(responseData[0])
+
+
+
     } else {
       // Handle errors for non-2xx responses
       console.error('Failed to send token to backend');
@@ -38,10 +44,9 @@ const sendTokenToBackend = async (options) => {
     console.error('Error sending token to backend:', error);
   }
 
-    // await navigation.navigate('Home');
+
 
 };
-// gQOZH4YaUxd6Z_IzkCWGd7UYZRDdIk9AjJL0QzOc44q4tdreiFFe4q6IyUgKKiWOAAABjNqYlnFV7imzm104lw
 const getCode = (target) => {
   const exp = 'code=';
   const condition = target.indexOf(exp);
@@ -55,14 +60,6 @@ const getCode = (target) => {
 const requestToken = async (requestCode) => {
   const requestToknUrl = 'https://kauth.kakao.com/oauth/token';
 
-//   const options = qs.stringify({
-//     grant_type: 'authorization_code',
-//     client_id:REST_API_KEY,
-//     redirect_uri: REDIRECT_URI,
-//     Content_type: 'application/x-www-form-urlencoded;charset=utf-8',
-//     code: requestCode
-    
-//   });
   const options ={
     grant_type: 'authorization_code',
     client_id:REST_API_KEY,
@@ -73,26 +70,6 @@ const requestToken = async (requestCode) => {
   };
 
   try {
-    // console.log("We are trying to get the tokenresponse")
-    // const tokenResponse = await axios.post(requestToknUrl, options);
-    // console.log("We are trying to get the accesstoken")
-    // const ACCESS_TOKEN = tokenResponse.data.access_token;
-    // console.log("This is the ACCESS_TOKEN" + ACCESS_TOKEN)
-
-    // const body = {
-    //   ACCESS_TOKEN,
-    // };
-    // const response = await axios.post(REDIRECT_URI, body);
-    // const value = response.data;
-    // console.log("This is the value")
-    // console.log(value)
-    // const result = await storeUser(value);
-    // console.log("This is the result: " + result)
-    // if (result === 'stored') {
-    //   const user = await getData('user');
-    //   console.log("This is the user data: " + user)
-    //   dispatch(read_S(user));
-        // await navigation.navigate('Home');
         await sendTokenToBackend(options); // Send token to backend after successful authentication
     }
    catch (e) {
@@ -101,6 +78,7 @@ const requestToken = async (requestCode) => {
 };
 
 const Login = () => (
+    
   <WebView
     source={{
       uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,

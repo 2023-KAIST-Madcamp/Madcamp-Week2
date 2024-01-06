@@ -1,7 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState, useContext } from 'react'
 import { Text, View , Button} from 'react-native'
 import { useData } from '../context/DataContext'
 import axios from 'axios';
+import { DataProvider } from '../context/DataContext'
 
 // {
 //     "name": "Jinsuk Park",
@@ -32,6 +33,7 @@ export default function Details({ navigation}) {
     const { selectedItem } = useData();
     const [data, setData] = useState()
     
+    const { userData, setUserData } = useData();
 
     useEffect(() => {
         fetchData();
@@ -52,10 +54,20 @@ export default function Details({ navigation}) {
     console.log("Hello")
     console.log(data)
 
- 
+
     return (
+
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+        {/* <View>
+            {userData ? (
+                <View>
+                    <Text>Data from user:</Text>
+                    <Text>{userData[0]}</Text>
+                </View>
+            ) : (
+                <Text>Loading...</Text>
+            )}
+    </View> */}
         <View>
             {data ? (
                 <View>
