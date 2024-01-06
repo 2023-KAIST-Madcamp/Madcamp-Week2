@@ -121,15 +121,6 @@ def receive_token():
         return jsonify(data_from_db)
     
 
-    
-
-
-
-
-        
-
-
-
 @app.route('/', methods=['GET'])
 def hello():
     # Your data (example)
