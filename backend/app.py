@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from pymongo import MongoClient
 from flask_cors import CORS
+import requests
 
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ def index():
     if request.method == 'POST':
         data = request.json  # Get the JSON data sent from React Native
         name = data.get('name')
-        age = data.get('age')
+        
 
         # Update MongoDB with the received data
         # For example, insert data into a collection
@@ -27,6 +28,42 @@ def index():
         collection.insert_one({'name': name, 'age': age})
         
         return 'Data received and updated in MongoDB!'
+
+
+@app.route('/user', methods=['POST'])
+def receive_token():
+    if request.method == 'POST':
+        data = request.get_json()
+        grant_type = data.get('grant_type')
+        client_id = data.get('client_id')
+        redirect_uri = data.get('redirect_uri')
+        code = data.get('code')
+
+        print(data)
+        grant_type = data['grant_type']
+        client_id = data['client_id']
+        redirect_uri = data['redirect_uri']
+        code = data['code']
+        print(grant_type)
+        
+        # Perform actions with the received access token (e.g., store it in the database)
+        # Example: Store the access token in the database
+        # Your code here...
+
+        token_response = requests.post(
+            f'https://kauth.kakao.com/oauth/token',
+            data={
+                'grant_type': 'authorization_code',
+                'client_id': client_id,
+                'redirect_uri': redirect_uri,
+                'code': code
+            },
+            headers={"content-type": "application/x-www-form-urlencoded"}
+        )
+
+        kakao_token = token_response.json()
+        print(kakao_token)
+        return jsonify(kakao_token)
 
 @app.route('/', methods=['GET'])
 def hello():
