@@ -1,14 +1,17 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native'
+import { useData } from '../context/DataContext';
 
 const REST_API_KEY = '12bbac899de85f22c958c86e7317727d';
 const REDIRECT_URI = 'https://example.com/oauthtravel';
 
 const Login = () => {
   const navigation = useNavigation();
+  const { setUserData } = useData(); // Get setUserData from context
+
   const sendTokenToBackend = async (options) => {
-    const apiUrl = 'http://143.248.197.67:5001/user'; // Replace with your backend API endpoint
+    const apiUrl = 'http://143.248.192.155:5000/user'; // Replace with your backend API endpoint
 
     try {
 
@@ -24,11 +27,11 @@ const Login = () => {
       });
 
       if (response.ok) {
-        navigation.navigate('Home')
         // Request was successful
         const responseData = await response.json();
         // Handle response data if needed
         console.log('Token sent to backend:', responseData);
+        setUserData(responseData); // Store responseData in the context
         navigation.navigate('Home')
       } else {
         // Handle errors for non-2xx responses

@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { Text, View , Button, FlatList, TouchableOpacity} from 'react-native'
+import { Text, View , Button, FlatList, TouchableOpacity, Modal} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 
 import { useData } from '../context/DataContext';
@@ -21,11 +21,13 @@ export default function Home({navigation}) {
     ]) 
 
     // const Stack = createNativeStackNavigator();
+    const { userData, setUserData } = useData();
 
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
+        <Text>{userData[0]}</Text>
         {/* <FlatList
             data={reviews}
             renderItem={({item})=> (
