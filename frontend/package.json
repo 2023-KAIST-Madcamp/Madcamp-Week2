@@ -22,7 +22,10 @@
     "react-native-paper": "^5.11.6",
     "react-native-screens": "^3.29.0",
     "react-native-web": "^0.19.10",
-    "react-native-webview": "^13.6.4"
+    "react-native-webview": "^13.6.4",
+    "react-simple-maps": "^3.0.0",
+    "react-native-svg": "13.9.0",
+    "react-native-maps": "1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

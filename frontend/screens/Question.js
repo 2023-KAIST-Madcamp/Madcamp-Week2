@@ -5,8 +5,8 @@ import CardPage from './CardPage'
 
 function Question({navigation}) {
 
-    const responseList = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
-    [0,0],[0,0],[0,0],[0,0],]
+    const responseList = [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],
+    [0,0,0],[0,0,0],[0,0,0],[0,0,0],]
     const [recommendData, setRecommendData] = useState()
 
     const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
@@ -33,15 +33,36 @@ function Question({navigation}) {
         navigation.navigate('Result')
     
       };
+
+      const updateResponseList = (qNum, answer) => {
+        if(qNum != null){            
+
+                if(responseList[qNum - 1][answer - 1] == 0){
+                    responseList[qNum - 1][answer - 1] = 1;
+                }
+                else{
+                    responseList[qNum - 1][answer - 1] = 0
+                }
+
+            }
+
+            console.log(responseList)
+              
+        }
+        let counter = 1;
     return (
     <View>
         <ScrollView>
             <Text> Question </Text>
-                    {Array.from({ length: 10 }, (_, index) => (
-                        <CardPage key={index} />
+                    {
+                    Array.from({ length: 10 }, (_, index) => (
+                        <CardPage key={index}
+                            counter={counter++}
+                            updateResponseList={updateResponseList}
+                         />
                     ))}
 
-            <Button title="Go to Result" onPress={questionResults}/>
+            <Button title="추천하기!" onPress={questionResults}/>
 
         </ScrollView>
     </View>
