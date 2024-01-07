@@ -1,33 +1,52 @@
-import React, { Component } from 'react'
-import { Text, View, Button, StyleSheet, } from 'react-native'
-import MapView, {Heatmap , Marker} from 'react-native-maps';
+import React, { Component , useState, useEffect} from 'react'
+import { Text, View, Button, StyleSheet, ActivityIndicator  } from 'react-native'
+import LottieView from "lottie-react-native";
 
+function LoadingScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" color="#0000ff" />
+      <LottieView source={require("../assets/loading.json")} autoPlay loop  style={{ height: 200 }} />
+    </View>
+  );
+}
 function Result({navigation}) {
 
-    const initialRegion = {
-        latitude: 36.5, // Center latitude
-        longitude: 127, // Center longitude
-        latitudeDelta: 360, // Zoom level. Adjust as needed for your view
-        longitudeDelta: 360, // Zoom level. Adjust as needed for your view
-      };
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a loading process (fetching data, performing operations, etc.)
+    setTimeout(() => {
+      setIsLoading(false); // Set isLoading to false after some time (simulating data fetching)
+    }, 2000); // Simulating a 2-second loading time
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // Navigate to the next screen once isLoading becomes false (loading is completed)
+      navigation.navigate('Result');
+    }
+  }, [isLoading, navigation]);
+
+
+      const handleProfile = () => {
+        navigation.navigate('Profile')
+      }
+
+      const handleDetails = () => {
+        navigation.navigate('Details')
+      }
     return (
+
+      isLoading ? <LoadingScreen />  :
         <View style={styles.container}>
-                 <MapView 
-                 initialRegion={initialRegion}
-                 style={styles.map} >
-                        {/* Add markers or other map elements here */}
-                        <Marker
-                        coordinate={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                        }}
-                        title="Marker Title"
-                        description="Marker Description"
-                        />
-                </MapView>
+
+                <Button title="프로필 이동!" onPress={handleProfile}/>
+                <Button title="디테일로 이동!" onPress={handleDetails}/>
+
       </View>
-    )
-  }
+    );
+    }
 
 
   const styles = StyleSheet.create({

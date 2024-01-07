@@ -13,6 +13,7 @@ import Login from './screens/Login';
 import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
+import Map from './screens/Map';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,14 +25,17 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name = "Home" component={Home}/>
-          <Stack.Screen name = "Details" component={Details}/>
+          <Stack.Screen name = "Details" component={Details} options={{ headerShown: false }}/>
           <Stack.Screen name = "Login" component={Login}/>
           <Stack.Screen name = "Profile" component={Profile}/>
           <Stack.Screen name = "Question" component={Question}/>
           <Stack.Screen name = "Result" component={Result}/>
+          <Stack.Screen name = "Map" component={Map}/>
+
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>
+
   );
 }
 

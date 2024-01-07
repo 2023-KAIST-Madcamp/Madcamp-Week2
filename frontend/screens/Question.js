@@ -1,12 +1,15 @@
-import React, { Component, useState } from 'react'
-import { Text, View, Button, ScrollView } from 'react-native'
+import React, { Component, useState, useEffect } from 'react'
+import { Text, View, Button, ScrollView, ActivityIndicator } from 'react-native'
 import { Avatar, Card, } from 'react-native-paper';
 import CardPage from './CardPage'
 
 function Question({navigation}) {
 
-    const responseList = [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],
-    [0,0,0],[0,0,0],[0,0,0],[0,0,0],]
+  const [isLoading, setIsLoading] = useState(false);
+
+
+    const responseList = [[0,0,0,0,0,0],[0,0,0,0],[0,0],[0,0,0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
+    [0,0],[0,0],[0,0],[0,0],]
     const [recommendData, setRecommendData] = useState()
 
     const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
@@ -51,6 +54,8 @@ function Question({navigation}) {
         }
         let counter = 1;
     return (
+
+     
     <View>
         <ScrollView>
             <Text> Question </Text>
