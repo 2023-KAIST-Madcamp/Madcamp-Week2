@@ -3,7 +3,8 @@ from pymongo import MongoClient
 from flask_cors import CORS
 import requests
 import json
-
+import pandas as pd
+from sklearn.preprocessing import normalize
 app = Flask(__name__)
 CORS(app)
 
@@ -37,10 +38,155 @@ def recommend_algo():
     answers = request.get_json()
     print(answers)
 
-    print(type(answers))
+    df = pd.read_csv('trip.csv')
 
-    print(answers[0])
-    print(answers[0][0])
+    location = df["Location"].tolist()
+
+    # sum = [0] * (number of column)
+
+    for i in range(len(answers)):
+        for j in range(len(answers[i])):
+
+            #Question 1
+            if i == 0:
+                print("Picking an age: ")
+                if answers[0][0] == 1:
+                    print("0 ~ 20")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[0][1] == 1:
+                    print("20 ~ 30")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[0][2] == 1:
+                    print("30 ~ 40")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[0][3] == 1:
+                    print("40 ~ 50")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[0][4] == 1:
+                    print("50 ~ 60")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()                            
+                if answers[0][5] == 1:
+                    print("60 ~ ")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 1:
+                print("Budget")
+                if answers[1][0] == 1:
+                    print("0 ~ 500")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[1][1] == 1:
+                    print("500 ~ 1000")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[1][2] == 1:
+                    print("1000 ~ 1500")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[1][3] == 1:
+                    print("1500 ~")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 2:
+                print("Gender")
+                if answers[2][0] == 1:
+                    print("Boy")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[2][1] == 1:
+                    print("Girl")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 3:
+                print("Who are you going with?")
+                if answers[3][0] == 1:
+                    print("Alone")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[3][1] == 1:
+                    print("With Friends")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[3][2] == 1:
+                    print("With Family")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[3][3] == 1:
+                    print("With Lover")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 4:
+                print("Who are you going with?")
+                if answers[4][0] == 1:
+                    print("Alone")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[4][1] == 1:
+                    print("With Friends")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 5:
+                print("Weather?")
+                if answers[6][0] == 1:
+                    print("Tropical")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[6][1] == 1:
+                    print("Cool")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()            
+            if i == 5:
+                print("Which Environment?")
+                if answers[5][0] == 1:
+                    print("The City")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[5][1] == 1:
+                    print("Nature")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            if i == 6:
+                print("Weather?")
+                if answers[6][0] == 1:
+                    print("Tropical")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+                if answers[6][1] == 1:
+                    print("Cool")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += ()
+            
+
+
 
     return "Got answers"
 
