@@ -12,7 +12,7 @@ const sendDataToBackend = async() => {
       };
 
 try {
-    const response = await axios.post('http://143.248.192.155:5000/login', dataToSend)
+    const response = await axios.post('http://143.248.197.75:5001/login', dataToSend)
     console.log(response.data); // Log the response from the server
   } catch (error) {
     console.error('Error:', error);
@@ -35,7 +35,7 @@ export default function Details({ navigation}) {
 
     const fetchData = async() => {
         try {
-            const response = await axios.get('http://143.248.192.155:5000/') // This needs to be local ip address
+            const response = await axios.get('http://143.248.197.75:5001/') // This needs to be local ip address
             // const response = await axios.get('http://127.0.0.1:5000/') // This needs to be local ip address
             console.log("This is our data ")
             console.log(response.data)

@@ -13,6 +13,7 @@ import Login from './screens/Login';
 import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
+import Start from './screens/Start'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,8 +23,9 @@ function App() {
   return (
     <DataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Start">
           <Stack.Screen name = "Home" component={Home}/>
+          <Stack.Screen name = "Start" component={Start}/>
           <Stack.Screen name = "Details" component={Details}/>
           <Stack.Screen name = "Login" component={Login}/>
           <Stack.Screen name = "Profile" component={Profile}/>

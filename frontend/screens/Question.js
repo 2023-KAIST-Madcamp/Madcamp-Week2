@@ -12,7 +12,7 @@ function Question({navigation}) {
     const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
     const questionResults = async () => {
-        const apiUrl = 'http://143.248.192.155:5000/recommend'; // Replace with your backend API endpoint
+        const apiUrl = 'http://143.248.197.75:5000/recommend'; // Replace with your backend API endpoint
     
         try {
     
