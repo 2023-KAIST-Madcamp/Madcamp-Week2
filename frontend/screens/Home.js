@@ -7,7 +7,7 @@ import { useData } from '../context/DataContext';
 export default function Home({navigation}) {
 
       const handleStart = () => {
-        navigation.navigate('Question')
+        navigation.navigate('RecoQuestion')
       }
 
     // const Stack = createNativeStackNavigator();

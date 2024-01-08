@@ -17,7 +17,6 @@ import Start from './screens/Start'
 import StartMain from './screens/StartMain'
 
 
-import Map from './screens/Map';
 
 
 const Tab = createBottomTabNavigator();
@@ -28,15 +27,16 @@ function App() {
   return (
     <DataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Start">
-          <Stack.Screen name = "Home" component={Home}/>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name = "Home" component={Home} options={{ headerShown: false }}/>
           <Stack.Screen name = "Details" component={Details} options={{ headerShown: false }}/>
           <Stack.Screen name = "Login" component={Login}/>
           <Stack.Screen name = "Start" component={Start}/>
           <Stack.Screen name = "StartMain" component={StartMain}/>
           <Stack.Screen name = "Profile" component={Profile}/>
           <Stack.Screen name = "Question" component={Question}/>
-          <Stack.Screen name = "Result" component={Result}/>
+          <Stack.Screen name = "Result" component={Result}options={{ headerShown: false }}/>
+          <Stack.Screen name = "RecoQuestion" component={RecoQuestion} />
           <Stack.Screen name = "Map" component={Map}/>
 
         </Stack.Navigator>
