@@ -7,7 +7,7 @@ function Profile({ navigation }) {
   const { userData } = useData(); // Get setUserData from context
 
   useEffect(() => {
-    fetch('http://143.248.192.155:5000/result')
+    fetch('http://143.248.197.75:5001/result')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

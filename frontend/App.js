@@ -14,6 +14,8 @@ import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
 import Start from './screens/Start'
+import StartMain from './screens/StartMain'
+
 
 import Map from './screens/Map';
 
@@ -31,6 +33,7 @@ function App() {
           <Stack.Screen name = "Details" component={Details} options={{ headerShown: false }}/>
           <Stack.Screen name = "Login" component={Login}/>
           <Stack.Screen name = "Start" component={Start}/>
+          <Stack.Screen name = "StartMain" component={StartMain}/>
           <Stack.Screen name = "Profile" component={Profile}/>
           <Stack.Screen name = "Question" component={Question}/>
           <Stack.Screen name = "Result" component={Result}/>

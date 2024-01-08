@@ -16,7 +16,7 @@ function Result({navigation}) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://143.248.192.155:5000/userReviews')
+    fetch('http://143.248.197.75:5001/userReviews')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

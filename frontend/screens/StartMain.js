@@ -1,21 +1,20 @@
 import React, { Component, useState } from 'react'
-
-import { Text, View , Button, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native'
-
+import { Text, View , Button, FlatList, TouchableOpacity, Modal, StyleSheet, Pressable} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
-
+import { Image } from "expo-image";
+import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles"
 import { useData } from '../context/DataContext';
+
 
 const REST_API_KEY = '12bbac899de85f22c958c86e7317727d';
 const REDIRECT_URI = 'https://example.com/oauthtravel';
 
-export default function Homecopy({navigation}) {
-
+export default function StartMain({navigation}) {
   const[modalOpen, setModalOpen] = useState(false);
-  const { setSelectedItem } = useData();
+  const { setUserData } = useData();
   // const handlePress = (item) => {
   //     setSelectedItem(item);
   //     navigation.navigate('Details');
@@ -24,8 +23,8 @@ export default function Homecopy({navigation}) {
   const sendTokenToBackend = async (options) => {
     const apiUrl = 'http://143.248.197.75:5001/user'; // Replace with your backend API endpoint
 
-
     try {
+
       console.log('This is the sendTokenToBackend function entry' + JSON.stringify(options.code))
 
       const response = await fetch(apiUrl, {
@@ -40,11 +39,14 @@ export default function Homecopy({navigation}) {
       // console.log("This is the response body: " + response.body)
 
       if (response.ok) {
+        navigation.navigate('Home')
         // Request was successful
         const responseData = await response.json();
-        // Handle response data if needed
-        console.log('Token sent from backend:', responseData);
-        navigation.navigate('Home')
+        // Handle response data if needed'
+        setUserData(responseData);
+        console.log('Token sent to backend:', responseData);
+        setModalOpen(false)
+
       } else {
         // Handle errors for non-2xx responses
         console.error('Failed to send token to backend');
@@ -93,9 +95,7 @@ export default function Homecopy({navigation}) {
   };
 
   
-  const handleStart = () => {
-    navigation.navigate('Question')
-  }
+
 
   const [reviews, setReviews] = useState([
       {title: 'Jinsuk Park is my name', rating: 5, body: 'fjkdlfjdklfj', key: '1'},
@@ -106,7 +106,32 @@ export default function Homecopy({navigation}) {
 
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.start2}>
+      <View style={[styles.blob11, styles.blob11Position]} />
+      <Image
+        style={styles.blob21}
+        contentFit="cover"
+        source={require("../assets/blob-2-1.png")}
+      />
+      <Pressable
+        style={[styles.bichatFillParent, styles.blob11Position]}
+        onPress={() => setModalOpen(true)}
+      >
+        <Image
+          style={styles.bichatFillIcon}
+          contentFit="cover"
+          source={require("../assets/bichatfill.png")}
+        />
+        <Text style={styles.text}>카카오로 로그인하기</Text>
+      </Pressable>
+      <Text style={[styles.findMyTrip, styles.blob11Position]}>
+        Find My Trip
+      </Text>
+      <Image
+        style={[styles.undrawAircraftReM05i11, styles.blob11Position]}
+        contentFit="cover"
+        source={require("../assets/undraw-aircraft-re-m05i-1-1.png")}
+      />
       <Modal visible={modalOpen} animationType='slide'>
         <View style={StyleSheet.modalContent}>
           <MaterialIcons
@@ -124,31 +149,82 @@ export default function Homecopy({navigation}) {
         />
         </View>
       </Modal>
-      <MaterialIcons
-        name = 'login'
-        size = {24}
-        onPress = {() => setModalOpen(true)}
-      />
-      <Text>Home Screen</Text>
-        {/* <Modal> */}
-
-        {/* <FlatList
-            data={reviews}
-            renderItem={({item})=> (
-                <TouchableOpacity onPress={handlePress(item)}>
-                    <Text>
-                        {item.title}
-
-                    </Text>
-                </TouchableOpacity>
-            )} /> */}
-        <Button
-        title="Start"
-        onPress={handleStart}
-
-        />
-      {/* </Modal> */}
     </View>
+    // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+    // </View>
   );
 }
 
+const styles = StyleSheet.create({
+  blob11Position: {
+    left: "50%",
+    position: "absolute",
+  },
+  blob11: {
+    height: "71.56%",
+    marginLeft: -229,
+    top: "7.5%",
+    bottom: "20.94%",
+    width: 458,
+    overflow: "hidden",
+  },
+  blob21: {
+    top: -306,
+    left: -297,
+    width: 1274,
+    height: 1284,
+    position: "absolute",
+    overflow: "hidden",
+  },
+  bichatFillIcon: {
+    width: 16,
+    height: 16,
+    overflow: "hidden",
+  },
+  text: {
+    fontSize: FontSize.size_xl,
+    fontWeight: "700",
+    // fontFamily: FontFamily.nanumSquareRound,
+    color: Color.colorBlack,
+    textAlign: "left",
+    marginLeft: 10,
+  },
+  bichatFillParent: {
+    marginTop: 171,
+    marginLeft: -112,
+    top: "50%",
+    borderRadius: Border.br_8xs,
+    backgroundColor: "#fae300",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Padding.p_mini,
+    paddingVertical: Padding.p_8xs,
+    overflow: "hidden",
+  },
+  findMyTrip: {
+    marginLeft: -146,
+    top: "40.47%",
+    fontSize: FontSize.size_31xl,
+    // fontFamily: FontFamily.interRegular,
+    color: Color.colorWhite,
+    textAlign: "center",
+  },
+  undrawAircraftReM05i11: {
+    height: "15.53%",
+    marginLeft: -118,
+    top: "22.03%",
+    bottom: "62.44%",
+    maxHeight: "100%",
+    width: 234,
+    overflow: "hidden",
+  },
+  start2: {
+    backgroundColor: Color.colorWhite,
+    flex: 1,
+    width: "100%",
+    height: 640,
+    overflow: "hidden",
+  },
+});
