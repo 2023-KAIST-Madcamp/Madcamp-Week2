@@ -167,12 +167,12 @@ def recommend_algo():
                             sum[k] += 0
             if i == 5:
                 print("Weather?")
-                if answers[6][0] == 1:
+                if answers[5][0] == 1:
                     print("Tropical")
                     for k in range(len(location)):
                         if k < len(sum):
                             sum[k] += 0
-                if answers[6][1] == 1:
+                if answers[5][1] == 1:
                     print("Cool")
                     for k in range(len(location)):
                         if k < len(sum):
