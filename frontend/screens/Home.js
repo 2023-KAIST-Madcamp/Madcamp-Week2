@@ -5,11 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useData } from '../context/DataContext';
 
 export default function Home({navigation}) {
-    // const { setSelectedItem } = useData();
-    // const handlePress = (item) => {
-    //     setSelectedItem(item);
-    //     navigation.navigate('Details');
-    //   };
 
       const handleStart = () => {
         navigation.navigate('Question')

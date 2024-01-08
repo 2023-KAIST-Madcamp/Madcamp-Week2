@@ -56,7 +56,7 @@ def recommend_algo():
     family = df["Family"].tolist()
     lover = df["Lover"].tolist()
     history = df["History"].tolist()
-    transportation = df["Transportation"].tolist()
+    transportation = df["Transporation"].tolist()
 
 
     sum = [0] * (11)
@@ -274,8 +274,40 @@ def get_data():
 
     return jsonify(result_list)
 
+@app.route('/userReviews', methods=['GET'])
+def get_reviews():
+    reviews = collection.find({ "review": { "$exists": True, "$ne": "" } })
+    print(reviews)
+    review_list = []  # Convert MongoDB cursor to a list of reviews
+    for review in reviews:
+        review_list.append({
+            'name': review['name'],
+            'review': review['review'],
+            'star': review['star'],
+            'profile_image': review['profile_image'],
+        })
+    print("This is the result list!")
+    print(review_list)
+    return jsonify(review_list)
+@app.route('/reviewSubmit', methods=['POST'])
+def get_review():
+    user_review = request.get_json()
 
+    username = user_review.get('name')
+    review = user_review.get('review')
+    star = user_review.get('star')
 
+     # Check if the username exists in the collection
+    existing_user = collection.find_one({'name': username})   
+    if existing_user:
+        # Update the existing document with the review field
+        collection.update_one(
+            {'_id': existing_user['_id']},
+            {'$set': {'review': review, 'star': star}}
+        )
+        return jsonify({'message': 'Review updawted successfully'})
+    else:
+        return jsonify({'message': 'User not found'})
 
 
 @app.route('/user', methods=['POST'])

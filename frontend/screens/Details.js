@@ -9,19 +9,15 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView ,
-  Linking,
-  Image
+  Image,
+  TextInput,
 } from 'react-native';
 import colors from '../assets/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import locations from '../assets/locations'
-import Carousel , { ParallaxImage } from 'react-native-snap-carousel';
-import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
-import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
-import MapView from 'react-native-maps';
 import learnMoreData from '../assets/learnMoreData';
-import Stars from 'react-native-stars';
+import { useData } from '../context/DataContext';
 
 
 const height = Dimensions.get('window').height;
@@ -30,18 +26,13 @@ Entypo.loadFont();
 
 
 const Details = ({navigation}) => {
-
-    const [activeIndex, setActiveIndex] = useState(0);
-
+    const [refresh, setRefresh] = useState(false); // State to trigger re-render
+    const { userData } = useData(); // Get setUserData from context
+    const [averageReview, setAverageReview] = useState(4);
+    const [reviewText, setReviewText] = useState(''); // State to store review text
     const [wishlist, setWishlist] = useState(false)
-
-    const carouselItems = locations[0].famous      
-    
-      const carouselRef = useRef(null);
-
-      const handleLink = (link) => {
-        Linking.openURL(link);
-      };
+    const [submittedReviews, setSubmittedReviews] = useState([]); // State to store submitted reviews
+    const [dataBaseReviews, setDataBaseReviews] = useState([])
 
       const renderLearnMoreItem = ({item}) => {
         return (
@@ -62,7 +53,7 @@ const Details = ({navigation}) => {
         );
       };
 
-    const handleHeart = () => {
+    const handleHeart = async() => {
         setWishlist(!wishlist)
         _renderItem = ({item, index}) => {
             return (
@@ -71,6 +62,8 @@ const Details = ({navigation}) => {
                 </View>
             );
         }
+        
+
     }
     const handleMap = () => {
         navigation.navigate('Map')
@@ -93,10 +86,75 @@ const Details = ({navigation}) => {
         </View>
     );
     const [defaultRating, setdefaultRating] = useState(4)
+    const [MydefaultRating, setMydefaultRating] = useState(5)
     const [maxRating, setmaxRating] = useState([1,2,3,4,5])
 
     const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true'
     const starImgCorner = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true'
+    
+
+      const handleSubmit = async () => {
+        const apiUrl = 'http://143.248.192.155:5000/reviewSubmit'; // Replace with your backend API endpoint
+      
+        try {
+          console.log('This is the handleSubmit function entry');
+      
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: userData[0],
+              review: reviewText,
+              star: MydefaultRating
+            }),
+          });
+      
+          if (response.ok) {
+            // Request was successful
+            const responseData = await response.json();
+            // Handle response data if needed
+            console.log('Review sent to backend:', responseData);
+            alert('리뷰 등록되었습니다!');
+            setSubmittedReviews([...submittedReviews, { review: reviewText, star: MydefaultRating }]);
+
+          } else {
+            // Handle errors for non-2xx responses
+            console.error('Failed to send review to backend');
+          }
+        } catch (error) {
+          // Handle network errors or other issues
+          console.error('Error sending review to backend:', error);
+        }
+        setRefresh((prevState) => !prevState);
+
+      };
+      useEffect(() => {
+        // Fetch reviews when the component mounts
+        fetch('http://143.248.192.155:5000/userReviews')
+          .then((response) => response.json())
+          .then((reviews) => {
+            // Set the fetched reviews to the state
+            setDataBaseReviews(reviews);
+            console.log(dataBaseReviews)
+          })
+          .catch((error) => {
+            console.error('Error fetching reviews:', error);
+          });
+          let sum = 0;
+
+          for(let i = 0; i < dataBaseReviews.length; i++){
+                sum += parseInt(dataBaseReviews[i].star)
+                console.log(sum)
+                console.log(dataBaseReviews[i].star)
+          }
+          setAverageReview(sum / dataBaseReviews.length)
+          console.log(averageReview)
+
+      }, [refresh]);
+
+
 
     const renderReviewComponent = () => (
 
@@ -106,29 +164,135 @@ const Details = ({navigation}) => {
         <Text style={styles.reviewtext}>괌 리뷰</Text>
             <View style={styles.reviewbox}>
                     <Text style={styles.reviewstar}>
-                {defaultRating + '/' + maxRating.length}
-            </Text>
+                {averageReview + '/' + maxRating.length}
+                    </Text>
                     <View style={styles.CustomRatingBarStyle}>
                     {maxRating.map((item, key) => (
-                        <TouchableOpacity
+                        <View
                         key={item}
                         onPress={() => setdefaultRating(item)}
                         >
                         <Image
                             style={styles.starImgStyle}
                             source={
-                            item <= defaultRating
+                            item <= averageReview
                                 ? { uri: starImgFilled }
                                 : { uri: starImgCorner }
                             }
                         />
-                        </TouchableOpacity>
+                        </View>
                     ))}
                     </View>
                 </View>
-
                 
-        </SafeAreaView>
+                <View style={{ flex: 1, marginHorizontal: 22 }}>
+                    <View style={{ marginVertical: 22 }}>
+                        <Text style={{
+                            fontSize: 22,
+                            fontWeight: 'bold',
+                            marginVertical: 12,
+                            color: 'black'
+                        }}>
+                            나의 리뷰 작성하기
+                        </Text>
+                            <View style={styles.mybox}>
+                                <Text style={styles.mystar}>
+                            {MydefaultRating + '/' + maxRating.length}
+                                </Text>
+                                    <View style={styles.MyCustomRatingBarStyle}>
+                                    {maxRating.map((item, key) => (
+                                        <TouchableOpacity
+                                        key={item}
+                                        onPress={() => setMydefaultRating(item)}
+                                        >
+                                        <Image
+                                            style={styles.MystarImgStyle}
+                                            source={
+                                            item <= MydefaultRating
+                                                ? { uri: starImgFilled }
+                                                : { uri: starImgCorner }
+                                            }
+                                        />
+                                        </TouchableOpacity>
+                                    ))}
+                                    </View> 
+                            </View>
+
+                        <Text style={{
+                            fontSize: 16,
+                            color: 'black'
+                        }}>{locations[0].title}에서의 시간이 어땠는지 작성해 보아요!</Text>
+                    </View>
+
+                    <View style={{ marginBottom: 12 }}>
+
+                        <View style={{
+                            width: "100%",
+                            height: 48,
+                            borderColor: 'black',
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            paddingLeft: 22
+                        }}>
+                            <TextInput
+                                placeholder='작성하기'
+                                placeholderTextColor={'black'}
+                                keyboardType='default'
+                                style={{
+                                    width: "100%"
+                                }}
+                                value={reviewText} // Set the value of TextInput to reviewText state
+                                onChangeText={(text) => setReviewText(text)} // Update reviewText state on input change
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={styles.buttonWrapper}
+                            onPress={() => handleSubmit()}>
+                            <Text style={styles.buttonText}>제출하기</Text>
+                        </TouchableOpacity>
+                    </View>
+
+            </View>
+            <View style={{ marginTop: 20, marginHorizontal: 22 }}>
+      <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 10 }}>Submitted Reviews</Text>
+      {dataBaseReviews.map((review, index) => (        
+        <View key={index} style={{ marginBottom: 20 }}>
+          <View style={styles.mybox}>
+                                <Text style={styles.mystar}>
+                            {review.star + '/' + maxRating.length}
+                                </Text>
+                                    <View style={styles.MyCustomRatingBarStyle}>
+                                    {maxRating.map((item, key) => (
+                                        <View
+                                        key={item}
+                                        onPress={() => setMydefaultRating(item)}
+                                        >
+                                        <Image
+                                            style={styles.MystarImgStyle}
+                                            source={
+                                            item <= review.star
+                                                ? { uri: starImgFilled }
+                                                : { uri: starImgCorner }
+                                            }
+                                        />
+                                        </View>
+                                    ))}
+                                    </View> 
+
+                            </View>
+                                    <View style={styles.profileContainer}>
+                                        <Image source={{ uri: review.profile_image }} style={styles.profileImage} />
+                                        <Text style={{ fontSize: 18, color: 'black', marginBottom: 5 }}>
+                                            {review.review}
+                                        </Text>
+                                    </View>
+                </View>
+                ))}
+            </View>
+                    
+            </SafeAreaView>
       );
 
       const handleInfoPress = () => {
@@ -138,6 +302,8 @@ const Details = ({navigation}) => {
       const handleReviewPress = () => {
         setDisplayComponent('review');
       };
+
+
     
   return (
     <View style={styles.container}>
@@ -193,17 +359,6 @@ const Details = ({navigation}) => {
 
         {displayComponent === 'info' ? renderInfoComponent() : renderReviewComponent()}
 
-        {/* <View style={styles.learnMoreWrapper}>
-          <View style={styles.learnMoreItemsWrapper}>
-            <FlatList
-              data={learnMoreData}
-              renderItem={renderLearnMoreItem}
-              keyExtractor={(item) => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
-          </View>
-        </View> */}
 
       </ScrollView>
     </View>
@@ -235,7 +390,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   itemTitle: {
-    fontFamily: 'Lato-Bold',
     fontSize: 32,
     color: colors.white,
   },
@@ -245,7 +399,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   locationText: {
-    fontFamily: 'Lato-Bold',
     fontSize: 16,
     color: colors.white,
   },
@@ -273,13 +426,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   descriptionTitle: {
-    fontFamily: 'Lato-Bold',
     fontSize: 24,
     color: colors.black,
   },
   descriptionText: {
     marginTop: 20,
-    fontFamily: 'Lato-Regular',
     fontSize: 16,
     color: colors.darkGray,
     height: 85,
@@ -297,7 +448,6 @@ const styles = StyleSheet.create({
     // Other styles as needed
   },
   infoTitle: {
-    fontFamily: 'Lato-Bold',
     fontSize: 12,
     color: colors.gray,
   },
@@ -307,13 +457,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   infoText: {
-    fontFamily: 'Lato-Bold',
     fontSize: 18,
     color: 'black',
     marginLeft: 10
   },
   infoSubText: {
-    fontFamily: 'Lato-Bold',
     fontSize: 14,
     color: colors.gray,
   },
@@ -395,7 +543,52 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 20,
     paddingRight: 20
-  }
+  },
+  mybox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  MyCustomRatingBarStyle: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 10,
+    paddingBottom: 10
+  },
+  MystarImgStyle: {
+    width: 20,
+    height: 20,
+    resizeMode: 'cover'
+  },
+  mytext : {
+    textAlign: 'left',
+    fontSize: 23,
+    marginTop: 20,
+    paddingLeft: 20,
+    fontWeight: 'bold'
+
+  },
+  mystar: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 2,
+    paddingLeft: 0,
+    paddingRight: 20
+  },
+  profileImage: {
+    width: 50, // Set the width as needed
+    height: 50, // Set the height as needed
+    borderRadius: 25, // Optional: Apply border radius for rounded images
+},    
+profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+},
+profileImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 25,
+    marginRight: 10, // Adjust margin as needed
+},
 
 });
 
