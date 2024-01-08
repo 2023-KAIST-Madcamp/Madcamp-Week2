@@ -15,8 +15,8 @@ import Profile from './screens/Profile'
 import Result from './screens/Result'
 import Start from './screens/Start'
 import StartMain from './screens/StartMain'
-
-
+import Map from './screens/Map'
+import RecoQuestion from './screens/RecoQuestion';
 
 
 const Tab = createBottomTabNavigator();
@@ -33,8 +33,8 @@ function App() {
           <Stack.Screen name = "Login" component={Login}/>
           <Stack.Screen name = "Start" component={Start}/>
           <Stack.Screen name = "StartMain" component={StartMain}/>
-          <Stack.Screen name = "Profile" component={Profile}/>
-          <Stack.Screen name = "Question" component={Question}/>
+          <Stack.Screen name = "Profile" component={Profile} options={{ headerShown: false }}/>
+          <Stack.Screen name = "Question" component={Question} />
           <Stack.Screen name = "Result" component={Result}options={{ headerShown: false }}/>
           <Stack.Screen name = "RecoQuestion" component={RecoQuestion} />
           <Stack.Screen name = "Map" component={Map}/>

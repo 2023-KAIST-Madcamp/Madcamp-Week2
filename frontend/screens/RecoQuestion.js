@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
       fontSize: FontSize.size_mini,
       left: 12,
       textAlign: "left",
-      fontFamily: FontFamily.nanumSquareRound,
       fontWeight: "700",
       position: "absolute",
     },
@@ -226,19 +225,14 @@ const styles = StyleSheet.create({
     textTypo1: {
       top: 133,
       zIndex: 3,
-      color: Color.colorWhite,
-      fontSize: FontSize.size_mini,
       textAlign: "left",
-      fontFamily: FontFamily.nanumSquareRound,
       fontWeight: "700",
       position: "absolute",
     },
     textTypo: {
       left: 23,
       color: Color.colorWhite,
-      fontSize: FontSize.size_mini,
       textAlign: "left",
-      fontFamily: FontFamily.nanumSquareRound,
       fontWeight: "700",
       position: "absolute",
     },
@@ -252,8 +246,6 @@ const styles = StyleSheet.create({
     text: {
       marginTop: 7,
       fontSize: FontSize.size_xl,
-      fontFamily: FontFamily.nanumSquareRound,
-      color: Color.colorBlack,
     },
     frameChild: {
       height: 57,

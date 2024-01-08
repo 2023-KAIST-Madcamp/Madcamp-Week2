@@ -24,7 +24,7 @@ Feather.loadFont();
 Entypo.loadFont();
 
 
-const Details = ({navigation}) => {
+const Details = ({navigation, route}) => {
     const [refresh, setRefresh] = useState(false); // State to trigger re-render
     const { userData } = useData(); // Get setUserData from context
     const [averageReview, setAverageReview] = useState(4);
@@ -32,6 +32,7 @@ const Details = ({navigation}) => {
     const [wishlist, setWishlist] = useState(false)
     const [submittedReviews, setSubmittedReviews] = useState([]); // State to store submitted reviews
     const [dataBaseReviews, setDataBaseReviews] = useState([])
+    const {location } = route.params
 
       const renderLearnMoreItem = ({item}) => {
         return (
@@ -61,7 +62,7 @@ const Details = ({navigation}) => {
                 tempWish.push(locations[0].title); // Push new value into the array
                 console.log("Here we are going to console log")
                 console.log(tempWish)
-                const apiUrl = 'http://143.248.197.75:5001/wishlist'; // Replace with your backend API endpoint
+                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
             
                 try {
                 const response = await fetch(apiUrl, {
@@ -88,7 +89,7 @@ const Details = ({navigation}) => {
             else {
                 const updatedWish = tempWish.filter(item => item !== locations[0].title); // Remove 'guam' from the array if wishlist is false
             
-                const apiUrl = 'http://143.248.197.75:5001/wishlist'; // Replace with your backend API endpoint
+                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
             
                 try {
                   const response = await fetch(apiUrl, {
@@ -127,7 +128,7 @@ const Details = ({navigation}) => {
             
           <View style={styles.learnMoreItemsWrapper}>
             <FlatList
-              data={learnMoreData}
+              data={location.famous}
               renderItem={renderLearnMoreItem}
               keyExtractor={(item) => item.id}
               horizontal
@@ -145,8 +146,8 @@ const Details = ({navigation}) => {
     
 
       const handleSubmit = async () => {
-        const apiUrl = 'http://143.248.197.75:5001/reviewSubmit'; // Replace with your backend API endpoint
-      
+        const apiUrl = 'http://143.248.192.155:5000/reviewSubmit'; // Replace with your backend API endpoint
+        
         try {
 
           console.log('This is the handleSubmit function entry');
@@ -158,7 +159,7 @@ const Details = ({navigation}) => {
             },
             body: JSON.stringify({
               name: userData[0],
-              review: reviewText,
+              [location.title] : reviewText,
               star: MydefaultRating
             }),
           });
@@ -183,30 +184,54 @@ const Details = ({navigation}) => {
         setRefresh((prevState) => !prevState);
 
       };
-      useEffect(() => {
-        // Fetch reviews when the component mounts
-        fetch('http://143.248.197.75:5001/userReviews')
-          .then((response) => response.json())
-          .then((reviews) => {
-            // Set the fetched reviews to the state
-            setDataBaseReviews(reviews);
-            console.log(dataBaseReviews)
-          })
-          .catch((error) => {
-            console.error('Error fetching reviews:', error);
-          });
-          let sum = 0;
+     
+        const handleReview = async () => {
+          const apiUrl = 'http://143.248.192.155:5000/userReviews'; // Replace with your backend API endpoint
+          
+          try {
+  
+            console.log('This is the handleReview');
+        
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                where: location.title
+              }),
+            });
+        
+            if (response.ok) {
+              // Request was successful
+              const newreviews = await response.json();
+              // setDataBaseReviews[newreviews]
+                  // Review is not null, use it
+              console.log('Raw data from :', newreviews);
+              setDataBaseReviews(newreviews)
 
-          for(let i = 0; i < dataBaseReviews.length; i++){
-                sum += parseInt(dataBaseReviews[i].star)
-                console.log(sum)
-                console.log(dataBaseReviews[i].star)
+              console.log('Review from backend:', dataBaseReviews);
+
+            } else {
+              // Handle errors for non-2xx responses
+              console.error('Backend response is empty');
+            }
+          } catch (error) {
+            // Handle network errors or other issues
+            console.error('Error sending title to backend:', error);
           }
-          setAverageReview(sum / dataBaseReviews.length)
-          console.log(averageReview)
 
+        };
+
+
+
+      useEffect(() => {
+        handleReview();
       }, [refresh]);
 
+      useEffect(() => {
+        renderReviewComponent()
+      }, [dataBaseReviews])
 
 
     const renderReviewComponent = () => (
@@ -363,17 +388,17 @@ const Details = ({navigation}) => {
          <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
-      <ImageBackground source={{uri: locations[0].image}} style={styles.backgroundImage}>
+      <ImageBackground source={{uri: location.image}} style={styles.backgroundImage}>
         <TouchableOpacity
           style={styles.backIcon}
           onPress={() => navigation.goBack()}>
           <Entypo name="chevron-left" size={32} color={colors.white} />
         </TouchableOpacity>
         <View style={styles.titlesWrapper}>
-          <Text style={styles.itemTitle}>{locations[0].title}</Text>
+          <Text style={styles.itemTitle}>{location.title}</Text>
           <View style={styles.locationWrapper}>
             <Entypo name="location-pin" size={24} color={colors.white} />
-            <Text style={styles.locationText}>{locations[0].geo}</Text>
+            <Text style={styles.locationText}>{location.geo}</Text>
           </View>
         </View>
       </ImageBackground>
@@ -383,7 +408,7 @@ const Details = ({navigation}) => {
         </TouchableOpacity>
         <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>{locations[0].title}</Text>
+          <Text style={styles.descriptionText}>{location.title}</Text>
         </View>
 
         <View style={styles.infoWrapper}>

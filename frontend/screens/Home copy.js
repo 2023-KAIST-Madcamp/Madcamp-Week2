@@ -22,7 +22,7 @@ export default function Homecopy({navigation}) {
   //   };
 
   const sendTokenToBackend = async (options) => {
-    const apiUrl = 'http://143.248.197.75:5001/user'; // Replace with your backend API endpoint
+    const apiUrl = 'http://143.248.192.155:5000/user'; // Replace with your backend API endpoint
 
 
     try {
