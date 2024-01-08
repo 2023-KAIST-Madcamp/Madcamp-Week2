@@ -58,7 +58,7 @@ const Details = ({navigation}) => {
         const tempWish = dataBaseReviews.wishlist || []; // Ensure tempWish is initialized as an array
        if(wishlist == true){
                 tempWish.push(locations[0].title); // Push new value into the array
-                console.log("Here we are going to console log tempWish")
+                console.log("Here we are going to console log")
                 console.log(tempWish)
                 const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
             

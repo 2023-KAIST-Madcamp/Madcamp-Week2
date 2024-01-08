@@ -7,6 +7,19 @@ function Question({navigation}) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    // Simulate a loading process (fetching data, performing operations, etc.)
+    setTimeout(() => {
+      setIsLoading(false); // Set isLoading to false after some time (simulating data fetching)
+    }, 2000); // Simulating a 2-second loading time
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // Navigate to the next screen once isLoading becomes false (loading is completed)
+      navigation.navigate('NextScreen');
+    }
+  }, [isLoading, navigation]);
 
     const responseList = [[0,0,0,0,0,0],[0,0,0,0],[0,0],[0,0,0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
     [0,0],[0,0],[0,0],[0,0],]
@@ -55,7 +68,7 @@ function Question({navigation}) {
         let counter = 1;
     return (
 
-     
+      isLoading ? <LoadingScreen />  :
     <View>
         <ScrollView>
             <Text> Question </Text>
