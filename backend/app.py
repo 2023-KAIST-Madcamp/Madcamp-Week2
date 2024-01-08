@@ -3,7 +3,8 @@ from pymongo import MongoClient
 from flask_cors import CORS
 import requests
 import json
-
+import pandas as pd
+from sklearn.preprocessing import normalize
 app = Flask(__name__)
 CORS(app)
 
@@ -42,22 +43,301 @@ def recommend_algo():
     answers = request.get_json()
     print(answers)
 
-    print(type(answers))
+    df = pd.read_csv('trip.csv')
 
-    print(answers[0])
-    print(answers[0][0])
 
-    return "Got answers"
+    location = df["Location"].tolist()
+    age = df["Age"].tolist()
+    shopping = df["Shopping"].tolist()
+    budget = df["Budget"].tolist()
+    shopping = df["Shopping"].tolist()
+    city = df["City"].tolist()
+    food = df["Food"].tolist()
+    hot = df["Hot"].tolist()
+    siteseeing = df["Siteseeing"].tolist()
+    popular = df["Popular"].tolist()
+    alone = df["Alone"].tolist()
+    friends = df["Friends"].tolist()
+    family = df["Family"].tolist()
+    lover = df["Lover"].tolist()
+    history = df["History"].tolist()
+    transportation = df["Transporation"].tolist()
 
-@app.route('/data', methods=['GET'])
+
+    sum = [0] * (11)
+
+    for i in range(len(answers)):
+        for j in range(len(answers[i])):
+
+            #Question 1
+            if i == 0:
+                print("Picking an age: ")
+                if answers[0][0] == 1:
+                    print("0 ~ 20")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[0][1] == 1:
+                    print("20 ~ 30")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[0][2] == 1:
+                    print("30 ~ 40")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[0][3] == 1:
+                    print("40 ~ 50")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[0][4] == 1:
+                    print("50 ~ 60")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0                            
+                if answers[0][5] == 1:
+                    print("60 ~ ")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 1:
+                print("Budget")
+                if answers[1][0] == 1:
+                    print("0 ~ 500")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[1][1] == 1:
+                    print("500 ~ 1000")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[1][2] == 1:
+                    print("1000 ~ 1500")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[1][3] == 1:
+                    print("1500 ~")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 2:
+                print("Gender")
+                if answers[2][0] == 1:
+                    print("Boy")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[2][1] == 1:
+                    print("Girl")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 3:
+                print("Who are you going with?")
+                if answers[3][0] == 1:
+                    print("Alone")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[3][1] == 1:
+                    print("With Friends")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[3][2] == 1:
+                    print("With Family")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[3][3] == 1:
+                    print("With Lover")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 4:
+                print("Who are you going with?")
+                if answers[4][0] == 1:
+                    print("Alone")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[4][1] == 1:
+                    print("With Friends")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 5:
+                print("Weather?")
+                if answers[5][0] == 1:
+                    print("Tropical")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[5][1] == 1:
+                    print("Cool")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0            
+            if i == 6:
+                print("Which Environment?")
+                if answers[6][0] == 1:
+                    print("The City")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[6][1] == 1:
+                    print("Nature")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 7:
+                print("Tourism or Vacation?")
+                if answers[7][0] == 1:
+                    print("Tourism")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[7][1] == 1:
+                    print("Vacation")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 8:
+                print("Bustling ?")
+                if answers[8][0] == 1:
+                    print("Bustling")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[8][1] == 1:
+                    print("Not Bustling")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 9:
+                print("Is transporation important?")
+                if answers[9][0] == 1:
+                    print("Yes")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[9][1] == 1:
+                    print("No")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            
+            if i == 10:
+                print("Historical/Cultural?")
+                if answers[10][0] == 1:
+                    print("Yes")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[10][1] == 1:
+                    print("No")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 11:
+                print("Activity?")
+                if answers[11][0] == 1:
+                    print("Yes")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[11][1] == 1:
+                    print("No")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+            if i == 12:
+                print("Shopping?")
+                if answers[12][0] == 1:
+                    print("Yes")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+                if answers[12][1] == 1:
+                    print("No")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += 0
+    
+    
+
+    return "Returning a recommendation"
+
+@app.route('/result', methods=['GET'])
 def get_data():
+
+    result_list = ['Osaka', 'Danang', 'Hong Kong']
 
     return jsonify(result_list)
 
+@app.route('/userReviews', methods=['GET'])
+def get_reviews():
+    reviews = collection.find({ "review": { "$exists": True, "$ne": "" } })
+    print(reviews)
+    review_list = []  # Convert MongoDB cursor to a list of reviews
+    for review in reviews:
+        review_list.append({
+            'name': review['name'],
+            'review': review['review'],
+            'star': review['star'],
+            'profile_image': review['profile_image'],
+            'wish_place': review['wish_places']
+        })
+    print("This is the result list!")
+    print(review_list)
+    return jsonify(review_list)
+@app.route('/reviewSubmit', methods=['POST'])
+def submit_review():
+    user_review = request.get_json()
+
+    username = user_review.get('name')
+    review = user_review.get('review')
+    star = user_review.get('star')
+
+     # Check if the username exists in the collection
+    existing_user = collection.find_one({'name': username})   
+    if existing_user:
+        # Update the existing document with the review field
+        collection.update_one(
+            {'_id': existing_user['_id']},
+            {'$set': {'review': review, 'star': star}}
+        )
+        return jsonify({'message': 'Review updawted successfully'})
+    else:
+        return jsonify({'message': 'User not found'})
+
+@app.route('/wishlist', methods=['POST'])
+def get_wishlist():
+    user_review = request.get_json()
+
+    username = user_review.get('name')
+    wishlist = user_review.get('wishlist')
+
+    print("This is the wishlist")
+    print(wishlist)
 
 
-
-
+     # Check if the username exists in the collection
+    existing_user = collection.find_one({'name': username})   
+    if existing_user:
+        # Update the existing document with the review field
+        collection.update_one(
+            {'_id': existing_user['_id']},
+            {'$set': {'wish_places': wishlist}}
+        )
+        return jsonify({'message': 'Review updawted successfully'})
+    else:
+        return jsonify({'message': 'User not found'})
+    
 @app.route('/user', methods=['POST'])
 def receive_token():
     if request.method == 'POST':
@@ -107,7 +387,6 @@ def receive_token():
 
 
         print(type(response.text))
-        # print(json_profile_image)
 
         json_response = json.loads(response.text)
 
@@ -115,10 +394,7 @@ def receive_token():
         app_profile_pic = json_response['properties']['profile_image']
 
         print(app_profile_pic)
-
-         # collection.delete_one({'name': name, 'age': age})
         
-
         # Check if the username exists in the collection
         existing_user = collection.find_one({'name': app_username})
 
