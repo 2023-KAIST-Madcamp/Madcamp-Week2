@@ -17,7 +17,7 @@ export default function Home({navigation}) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
-        <Text>{userData[0]}</Text>
+        {/* <Text>{userData[0]}</Text> */}
         <Button
         title="Start"
         onPress={handleStart}

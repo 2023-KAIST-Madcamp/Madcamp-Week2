@@ -4,15 +4,23 @@ from flask_cors import CORS
 import requests
 import json
 import pandas as pd
+import certifi
 from sklearn.preprocessing import normalize
+from pymongo import MongoClient
 app = Flask(__name__)
 CORS(app)
 
+ca = certifi.where()
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://jjpark57:baseball101@cluster0.hsrsouo.mongodb.net/')  # Replace with your MongoDB connection string
+client = MongoClient('mongodb+srv://jjpark57:baseball101@cluster0.hsrsouo.mongodb.net/', tlsCAFile = ca)  # Replace with your MongoDB connection string
+# print('this is client')
+# print(client)
 db = client['mytrip']  # Replace 'your_database' with your database name
+# print('this is db')
+# print(db)
 collection = db['flask']  # Replace 'your_collection' with your collection name
-
+# print('this is collection')
+# print(collection)
 
 answers = []
 result_list = []
@@ -432,4 +440,4 @@ def hello():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)

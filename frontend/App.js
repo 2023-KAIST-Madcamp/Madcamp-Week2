@@ -15,6 +15,8 @@ import Profile from './screens/Profile'
 import Result from './screens/Result'
 import RecoQuestion from './screens/RecoQuestion'
 
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 

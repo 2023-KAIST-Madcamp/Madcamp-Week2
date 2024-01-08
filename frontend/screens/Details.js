@@ -52,6 +52,7 @@ const Details = ({navigation}) => {
         );
       };
 
+
       const handleHeart = async () => {
         setWishlist(!wishlist);
       
@@ -60,7 +61,7 @@ const Details = ({navigation}) => {
                 tempWish.push(locations[0].title); // Push new value into the array
                 console.log("Here we are going to console log")
                 console.log(tempWish)
-                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
+                const apiUrl = 'http://143.248.197.75:5001/wishlist'; // Replace with your backend API endpoint
             
                 try {
                 const response = await fetch(apiUrl, {
@@ -87,7 +88,7 @@ const Details = ({navigation}) => {
             else {
                 const updatedWish = tempWish.filter(item => item !== locations[0].title); // Remove 'guam' from the array if wishlist is false
             
-                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
+                const apiUrl = 'http://143.248.197.75:5001/wishlist'; // Replace with your backend API endpoint
             
                 try {
                   const response = await fetch(apiUrl, {
@@ -112,6 +113,7 @@ const Details = ({navigation}) => {
                 }
               }
        }
+
     
         
     const handleMap = () => {
@@ -143,9 +145,10 @@ const Details = ({navigation}) => {
     
 
       const handleSubmit = async () => {
-        const apiUrl = 'http://143.248.192.155:5000/reviewSubmit'; // Replace with your backend API endpoint
+        const apiUrl = 'http://143.248.197.75:5001/reviewSubmit'; // Replace with your backend API endpoint
       
         try {
+
           console.log('This is the handleSubmit function entry');
       
           const response = await fetch(apiUrl, {
@@ -168,6 +171,7 @@ const Details = ({navigation}) => {
             alert('리뷰 등록되었습니다!');
             setSubmittedReviews([...submittedReviews, { review: reviewText, star: MydefaultRating }]);
 
+
           } else {
             // Handle errors for non-2xx responses
             console.error('Failed to send review to backend');
@@ -181,7 +185,7 @@ const Details = ({navigation}) => {
       };
       useEffect(() => {
         // Fetch reviews when the component mounts
-        fetch('http://143.248.192.155:5000/userReviews')
+        fetch('http://143.248.197.75:5001/userReviews')
           .then((response) => response.json())
           .then((reviews) => {
             // Set the fetched reviews to the state
