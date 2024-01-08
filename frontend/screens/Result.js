@@ -13,8 +13,24 @@ function LoadingScreen() {
 function Result({navigation}) {
 
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
+    fetch('http://143.248.192.155:5000/userReviews')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setData(json);
+      })
+      .catch((error) => {
+        console.error('Error: ', error);
+      });
+
+
     // Simulate a loading process (fetching data, performing operations, etc.)
     setTimeout(() => {
       setIsLoading(false); // Set isLoading to false after some time (simulating data fetching)
@@ -41,6 +57,8 @@ function Result({navigation}) {
       isLoading ? <LoadingScreen />  :
         <View style={styles.container}>
 
+                
+                <Text>{data.wish_place}</Text>
                 <Button title="프로필 이동!" onPress={handleProfile}/>
                 <Button title="디테일로 이동!" onPress={handleDetails}/>
 

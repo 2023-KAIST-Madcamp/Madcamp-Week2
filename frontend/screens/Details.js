@@ -19,7 +19,6 @@ import locations from '../assets/locations'
 import learnMoreData from '../assets/learnMoreData';
 import { useData } from '../context/DataContext';
 
-
 const height = Dimensions.get('window').height;
 Feather.loadFont();
 Entypo.loadFont();
@@ -53,18 +52,68 @@ const Details = ({navigation}) => {
         );
       };
 
-    const handleHeart = async() => {
-        setWishlist(!wishlist)
-        _renderItem = ({item, index}) => {
-            return (
-                <View style={styles.slide}>
-                    <Text style={styles.title}>{ item.title }</Text>
-                </View>
-            );
-        }
+      const handleHeart = async () => {
+        setWishlist(!wishlist);
+      
+        const tempWish = dataBaseReviews.wishlist || []; // Ensure tempWish is initialized as an array
+       if(wishlist == true){
+                tempWish.push(locations[0].title); // Push new value into the array
+                console.log("Here we are going to console log tempWish")
+                console.log(tempWish)
+                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
+            
+                try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                    name: userData[0],
+                    wishlist: tempWish,
+                    }),
+                });
+            
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Review sent to backend:', responseData);
+                } else {
+                    console.error('Failed to send review to backend');
+                }
+                } catch (error) {
+                console.error('Error sending review to backend:', error);
+                }
+            }
+            else {
+                const updatedWish = tempWish.filter(item => item !== locations[0].title); // Remove 'guam' from the array if wishlist is false
+            
+                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
+            
+                try {
+                  const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      name: userData[0],
+                      wishlist: updatedWish,
+                    }),
+                  });
+            
+                  if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Updated wishlist sent to backend:', responseData);
+                  } else {
+                    console.error('Failed to send updated wishlist to backend');
+                  }
+                } catch (error) {
+                  console.error('Error sending updated wishlist to backend:', error);
+                }
+              }
+       }
+    
         
-
-    }
     const handleMap = () => {
         navigation.navigate('Map')
     }

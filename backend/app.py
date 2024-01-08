@@ -285,12 +285,13 @@ def get_reviews():
             'review': review['review'],
             'star': review['star'],
             'profile_image': review['profile_image'],
+            'wish_place': review['wish_places']
         })
     print("This is the result list!")
     print(review_list)
     return jsonify(review_list)
 @app.route('/reviewSubmit', methods=['POST'])
-def get_review():
+def submit_review():
     user_review = request.get_json()
 
     username = user_review.get('name')
@@ -309,7 +310,29 @@ def get_review():
     else:
         return jsonify({'message': 'User not found'})
 
+@app.route('/wishlist', methods=['POST'])
+def get_wishlist():
+    user_review = request.get_json()
 
+    username = user_review.get('name')
+    wishlist = user_review.get('wishlist')
+
+    print("This is the wishlist")
+    print(wishlist)
+
+
+     # Check if the username exists in the collection
+    existing_user = collection.find_one({'name': username})   
+    if existing_user:
+        # Update the existing document with the review field
+        collection.update_one(
+            {'_id': existing_user['_id']},
+            {'$set': {'wish_places': wishlist}}
+        )
+        return jsonify({'message': 'Review updawted successfully'})
+    else:
+        return jsonify({'message': 'User not found'})
+    
 @app.route('/user', methods=['POST'])
 def receive_token():
     if request.method == 'POST':
@@ -359,7 +382,6 @@ def receive_token():
 
 
         print(type(response.text))
-        # print(json_profile_image)
 
         json_response = json.loads(response.text)
 
@@ -367,10 +389,7 @@ def receive_token():
         app_profile_pic = json_response['properties']['profile_image']
 
         print(app_profile_pic)
-
-         # collection.delete_one({'name': name, 'age': age})
         
-
         # Check if the username exists in the collection
         existing_user = collection.find_one({'name': app_username})
 
