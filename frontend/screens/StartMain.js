@@ -39,13 +39,14 @@ export default function StartMain({navigation}) {
       // console.log("This is the response body: " + response.body)
 
       if (response.ok) {
-        navigation.navigate('Profile')
+        
         // Request was successful
         const responseData = await response.json();
         // Handle response data if needed'
         setUserData(responseData);
         console.log('Token sent to backend:', responseData);
         setModalOpen(false)
+        navigation.navigate('Profile')
 
       } else {
         // Handle errors for non-2xx responses

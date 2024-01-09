@@ -64,6 +64,7 @@ export default function RecoQuestion() {
 
 
 {/* Q1 */}
+<View style={styles.question}>
 <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
           <Text style={[styles.q11, styles.q11Typo]}>Q1.</Text>
@@ -519,6 +520,7 @@ export default function RecoQuestion() {
                             onPress={questionResults}>
                             <Text style={styles.buttonText} >여행지 추천 받기!</Text>
                         </TouchableOpacity> 
+    </View>
     </ScrollView>
 
   );

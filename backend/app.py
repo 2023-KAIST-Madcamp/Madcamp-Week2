@@ -6,11 +6,12 @@ import json
 import pandas as pd
 from sklearn.preprocessing import normalize
 from pymongo import MongoClient
+import certifi
 app = Flask(__name__)
 CORS(app)
-
+ca = certifi.where()
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://jjpark57:baseball101@cluster0.hsrsouo.mongodb.net/')  # Replace with your MongoDB connection string
+client = MongoClient('mongodb+srv://jjpark57:baseball101@cluster0.hsrsouo.mongodb.net/', tlsCAFile = ca)  # Replace with your MongoDB connection string
 # print('this is client')
 # print(client)
 db = client['mytrip']  # Replace 'your_database' with your database name

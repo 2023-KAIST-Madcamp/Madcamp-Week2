@@ -65,8 +65,8 @@ function Profile({ navigation }) {
   );
 
   const filteredLocations = locations.filter((location) => {
-    console.log("We are going through location in the profile page")
-    console.log(wishFilter)
+    // console.log("We are going through location in the profile page")
+    // console.log(wishFilter)
     return wishFilter.includes(location.title);
   });
 
