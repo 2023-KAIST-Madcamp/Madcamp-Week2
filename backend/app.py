@@ -22,6 +22,7 @@ collection = db['flask']  # Replace 'your_collection' with your collection name
 
 answers = []
 result_list = []
+sortedResult = {}
 
 @app.route('/login', methods=['POST'])
 def index():
@@ -40,14 +41,17 @@ def index():
 
 @app.route('/recommend', methods=['POST'])
 def recommend_algo():
+    #[[0,0,0,0,0,0],[0,0,0,0],[0,0],[0,0,0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
+#    [0,0],[0,0],[0,0],]
     answers = request.get_json()
     print(answers)
 
-    df = pd.read_csv('trip.csv')
-
+    df = pd.read_csv('final.csv')
 
     location = df["Location"].tolist()
+    # ['오사카', '다낭',,,,,]
     age = df["Age"].tolist()
+    # ['오사카 나이', '다낭 나이',,,]
     shopping = df["Shopping"].tolist()
     budget = df["Budget"].tolist()
     shopping = df["Shopping"].tolist()
@@ -62,9 +66,19 @@ def recommend_algo():
     lover = df["Lover"].tolist()
     history = df["History"].tolist()
     transportation = df["Transporation"].tolist()
+    activity = df["Activity"].tolist()
+    age4 = df["Age4"].tolist()
+    age5 = df["Age5"].tolist()
+    age6 = df["Age6"].tolist()
+    budget2 = df["Budget2"].tolist()
 
 
-    sum = [0] * (11)
+    sum = [0] * (12)
+
+    result = {}
+
+    for l in location:
+        result[l] = 0
 
     for i in range(len(answers)):
         for j in range(len(answers[i])):
@@ -76,7 +90,7 @@ def recommend_algo():
                     print("0 ~ 20")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += age[k]
                 if answers[0][1] == 1:
                     print("20 ~ 30")
                     for k in range(len(location)):
@@ -91,29 +105,29 @@ def recommend_algo():
                     print("40 ~ 50")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += age4[k]
                 if answers[0][4] == 1:
                     print("50 ~ 60")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0                            
+                            sum[k] += age5[k]                          
                 if answers[0][5] == 1:
                     print("60 ~ ")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += age6[k]
             if i == 1:
                 print("Budget")
-                if answers[1][0] == 1:
+                if answers[1][0] == 1:  
                     print("0 ~ 500")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += budget[k]
                 if answers[1][1] == 1:
                     print("500 ~ 1000")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += budget2[k]
                 if answers[1][2] == 1:
                     print("1000 ~ 1500")
                     for k in range(len(location)):
@@ -130,154 +144,184 @@ def recommend_algo():
                     print("Boy")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += siteseeing[k]
+                            sum[k] += history[k]
                 if answers[2][1] == 1:
                     print("Girl")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += shopping[k]
+                            sum[k] += food[k]
             if i == 3:
                 print("Who are you going with?")
                 if answers[3][0] == 1:
                     print("Alone")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += alone[k]
                 if answers[3][1] == 1:
                     print("With Friends")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += friends[k]
                 if answers[3][2] == 1:
                     print("With Family")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += family[k]
                 if answers[3][3] == 1:
                     print("With Lover")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += lover[k]
             if i == 4:
-                print("Who are you going with?")
-                if answers[4][0] == 1:
-                    print("Alone")
-                    for k in range(len(location)):
-                        if k < len(sum):
-                            sum[k] += 0
-                if answers[4][1] == 1:
-                    print("With Friends")
-                    for k in range(len(location)):
-                        if k < len(sum):
-                            sum[k] += 0
-            if i == 5:
                 print("Weather?")
-                if answers[5][0] == 1:
+                if answers[4][0] == 1:
                     print("Tropical")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-                if answers[5][1] == 1:
+                            sum[k] += hot[k]
+                if answers[4][1] == 1:
                     print("Cool")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0            
-            if i == 6:
+                            sum[k] -= hot[k]            
+            if i == 5:
                 print("Which Environment?")
-                if answers[6][0] == 1:
+                if answers[5][0] == 1:
                     print("The City")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-                if answers[6][1] == 1:
+                            sum[k] += city[k]
+                if answers[5][1] == 1:
                     print("Nature")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-            if i == 7:
+                            sum[k] -= city[k]
+            if i == 6:
                 print("Tourism or Vacation?")
-                if answers[7][0] == 1:
+                if answers[6][0] == 1:
                     print("Tourism")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-                if answers[7][1] == 1:
+                            sum[k] += siteseeing[k]
+                if answers[6][1] == 1:
                     print("Vacation")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-            if i == 8:
+                            sum[k] += lover[k]
+                            sum[k] -= city[k]
+            if i == 7:
                 print("Bustling ?")
-                if answers[8][0] == 1:
+                if answers[7][0] == 1:
                     print("Bustling")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-                if answers[8][1] == 1:
+                            sum[k] += siteseeing[k]
+                            sum[k] += popular[k]
+                            sum[k] += shopping[k]
+                if answers[7][1] == 1:
                     print("Not Bustling")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-            if i == 9:
+                            sum[k] -= siteseeing[k]
+                            sum[k] -= shopping[k]
+            if i == 8:
                 print("Is transporation important?")
+                if answers[8][0] == 1:
+                    print("Yes")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] += transportation[k]
+                if answers[8][1] == 1:
+                    print("No")
+                    for k in range(len(location)):
+                        if k < len(sum):
+                            sum[k] -= transportation[k]
+            
+            if i == 9:
+                print("Historical/Cultural?")
                 if answers[9][0] == 1:
                     print("Yes")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += history[k]
                 if answers[9][1] == 1:
                     print("No")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-            
+                            sum[k] += siteseeing[k]
             if i == 10:
-                print("Historical/Cultural?")
+                print("Activity?")
                 if answers[10][0] == 1:
                     print("Yes")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += activity[k]
                 if answers[10][1] == 1:
                     print("No")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] -= activity[k]
             if i == 11:
-                print("Activity?")
+                print("Shopping?")
                 if answers[11][0] == 1:
                     print("Yes")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
+                            sum[k] += shopping[k]
                 if answers[11][1] == 1:
                     print("No")
                     for k in range(len(location)):
                         if k < len(sum):
-                            sum[k] += 0
-            if i == 12:
-                print("Shopping?")
-                if answers[12][0] == 1:
-                    print("Yes")
-                    for k in range(len(location)):
-                        if k < len(sum):
-                            sum[k] += 0
-                if answers[12][1] == 1:
-                    print("No")
-                    for k in range(len(location)):
-                        if k < len(sum):
-                            sum[k] += 0
-    
-    
+                            sum[k] -= shopping[k]
+
+    print(sum)
+    i = 0
+
+    for l in location:
+        result.update({l:sum[i]})
+        i += 1
+
+    global sortedResult
+    sortedResult = sorted(result.items(), key = lambda x:x[1], reverse = True)
+    print(sortedResult)
+
 
     return "Returning a recommendation"
 
 @app.route('/result', methods=['GET'])
 def get_data():
+    result_list = []
 
-    result_list = ['Osaka', 'Danang', 'Hong Kong']
+    print(sortedResult)
+    for i in range(3):
+        result_list.append(sortedResult[i][0])
+    print(result_list)
 
-    return jsonify(result_list)
+    return result_list
+
+
+
+@app.route('/getWishlist', methods=['POST'])
+def get_wishlistdata():
+    data = request.get_json()
+    print("This is the data sent from the profile page")
+    print(data)
+
+     # Find documents where the 'name' field matches '이수민'
+    user_wishlist = collection.find_one({'name': data['name']})
+
+    if user_wishlist:
+        # Extract the 'wish_places' field from the document
+        wishlist = user_wishlist.get('wish_places', [])
+        print("This is the return value to display on profile page wishlist")
+        print(wishlist)
+
+        # Return the 'wish_places' as JSON response
+        return jsonify(wishlist)
+    else:
+        return jsonify([])  # If no matching user is found, return an empty array
 
 @app.route('/userReviews', methods=['POST'])
 def get_reviews():
@@ -331,7 +375,8 @@ def get_wishlist():
     username = user_review.get('name')
     wishlist = user_review.get('wishlist')
 
-    print("This is the wishlist")
+    print("This is the wishlist sent from details page")
+    print("And this returns value to details page")
     print(wishlist)
 
 
@@ -343,7 +388,17 @@ def get_wishlist():
             {'_id': existing_user['_id']},
             {'$set': {'wish_places': wishlist}}
         )
-        return jsonify({'message': 'Review updawted successfully'})
+          # Find documents where the 'name' field matches '이수민'
+        user_wishlist = collection.find_one({'name': username})
+
+        if user_wishlist:
+            # Extract the 'wish_places' field from the document
+            wishlist = user_wishlist.get('wish_places', [])
+            print("This is the return value")
+            print(wishlist)
+
+            # Return the 'wish_places' as JSON response
+            return jsonify(wishlist)
     else:
         return jsonify({'message': 'User not found'})
     

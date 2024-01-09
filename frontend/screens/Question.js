@@ -22,7 +22,7 @@ function Question({navigation}) {
   }, [isLoading, navigation]);
 
     const responseList = [[0,0,0,0,0,0],[0,0,0,0],[0,0],[0,0,0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
-    [0,0],[0,0],[0,0],[0,0],]
+    [0,0],[0,0],[0,0],]
     const [recommendData, setRecommendData] = useState()
 
     const LeftContent = props => <Avatar.Icon {...props} icon="folder" />

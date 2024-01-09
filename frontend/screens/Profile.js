@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors';
 import locations from '../assets/locations'
 import learnMoreData from '../assets/learnMoreData';
-import location from '../assets/locations'
+import { useFocusEffect } from '@react-navigation/native';
 
 const height = Dimensions.get('window').height;
 Feather.loadFont();
@@ -18,6 +18,60 @@ Entypo.loadFont();
 function Profile({ navigation }) {
   const [data, setData] = useState([]);
   const { userData } = useData(); // Get setUserData from context
+
+  const [wishFilter, setWishFilter] = useState([])
+  
+
+
+  const handleWishlist = async () => {
+    const apiUrl = 'http://143.248.192.155:5000/getWishlist'; // Replace with your backend API endpoint
+    
+    try {
+  
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: userData[0]
+        }),
+      });
+  
+      if (response.ok) {
+        // Request was successful
+
+        const newwaitlist = await response.json();
+        console.log("This is the newwaitlist")
+        console.log(newwaitlist)
+        setWishFilter(newwaitlist)
+
+        // Handle response data if needed
+
+      } else {
+        // Handle errors for non-2xx responses
+        console.error('Failed to send review to backend');
+      }
+    } catch (error) {
+      // Handle network errors or other issues
+      console.error('Error sending review to backend:', error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      handleWishlist();
+    }, [])
+  );
+
+  const filteredLocations = locations.filter((location) => {
+    console.log("We are going through location in the profile page")
+    console.log(wishFilter)
+    return wishFilter.includes(location.title);
+  });
+
+  console.log(filteredLocations)
+  
 
   const renderLearnMoreItem = ({item}) => {
     return (
@@ -45,9 +99,14 @@ function Profile({ navigation }) {
     );
   };
 
+  // const handleStart = () => {
+  //   navigation.navigate('Question')
+  // }
+  
   const handleStart = () => {
-    navigation.navigate('Question')
+    navigation.navigate('RecoQuestion')
   }
+  
 
   return (
 <View style={styles.container}>
@@ -74,20 +133,22 @@ function Profile({ navigation }) {
                             onPress={handleStart}>
                             <Text style={styles.buttonText}>여행지 추천 받기!</Text>
                         </TouchableOpacity>
+                        {/* This is the discovery Tab */}
               <Text style={styles.descriptionTitle}>Discovery</Text>
               <View style={styles.discoverItemsWrapper}>
                           <FlatList
-                            data={location}
+                            data={locations}
                             renderItem={renderLearnMoreItem}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                           />
                 </View> 
+                {/* // This is the Wish List Tab */}
           <Text style={styles.descriptionTitle}>Wish List</Text>
           <View style={styles.discoverItemsWrapper}>
                           <FlatList
-                            data={location}
+                            data={filteredLocations}
                             renderItem={renderLearnMoreItem}
                             keyExtractor={(item) => item.id}
                             horizontal
@@ -95,11 +156,11 @@ function Profile({ navigation }) {
                           />
                 </View> 
         </View>
-
+          {/* This is the visited place tab */}
           <Text style={styles.descriptionTitle}>Visited Lists</Text>
           <View style={styles.discoverItemsWrapper}>
                           <FlatList
-                            data={location}
+                            data={locations}
                             renderItem={renderLearnMoreItem}
                             keyExtractor={(item) => item.id}
                             horizontal

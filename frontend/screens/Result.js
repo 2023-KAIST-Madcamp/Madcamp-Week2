@@ -3,6 +3,7 @@ import { Text, View, Button, StyleSheet, ActivityIndicator, FlatList ,TouchableO
 import LottieView from "lottie-react-native";
 import location from '../assets/locations'
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useFocusEffect } from '@react-navigation/native';
 
 function LoadingScreen() {
   return (
@@ -11,11 +12,14 @@ function LoadingScreen() {
     </View>
   );
 }
+
+
 function Result({navigation}) {
 
 
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [resultData, setResultData] = useState([])
 
   const renderLearnMoreItem = ({item}) => {
     return (
@@ -64,8 +68,60 @@ function Result({navigation}) {
 
 
       const handleHome = () => {
-        navigation.navigate('Home')
+        navigation.navigate('RecoQuestion')
       }
+      useFocusEffect(
+        React.useCallback(() => {
+          handleReview();
+        }, [])
+      );
+
+        const handleReview = async () => {
+          const apiUrl = 'http://143.248.192.155:5000/result'; // Replace with your backend API endpoint
+          
+          try {
+        
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+  
+            });
+        
+            if (response.ok) {
+              // Request was successful
+              const result = await response.json();
+              // setDataBaseReviews[newreviews]
+                  // Review is not null, use it
+              console.log('Our Top 3 Results :', result);
+              setResultData(result) 
+              console.log(resultData)         
+
+  
+  
+            } else {
+              // Handle errors for non-2xx responses
+              console.error('Backend response is empty');
+            }
+          } catch (error) {
+            // Handle network errors or other issues
+            console.error('Error sending title to backend:', error);
+          }
+  
+        };
+
+        const recommendData = []
+
+        for(let i = 0 ; i < resultData.length; i++){
+          for(let j = 0 ; j < 10; j++){
+            if(location[j].title == resultData[i]){
+              recommendData.push(location[j])
+            }
+          }
+        }
+
+
 
     return (
 
@@ -85,8 +141,9 @@ function Result({navigation}) {
           </View>
 
           <View style={styles.discoverItemsWrapper}>
+            {console.log(recommendData)}
             <FlatList
-              data={location}
+              data={recommendData}
               renderItem={renderLearnMoreItem}
               keyExtractor={(item) => item.id}
               horizontal

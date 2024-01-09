@@ -10,7 +10,7 @@ import {
   FlatList,
   SafeAreaView ,
   Image,
-  TextInput,
+  TextInput,Linking
 } from 'react-native';
 import colors from '../assets/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -18,6 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import locations from '../assets/locations'
 import learnMoreData from '../assets/learnMoreData';
 import { useData } from '../context/DataContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 const height = Dimensions.get('window').height;
 Feather.loadFont();
@@ -33,87 +34,79 @@ const Details = ({navigation, route}) => {
     const [submittedReviews, setSubmittedReviews] = useState([]); // State to store submitted reviews
     const [dataBaseReviews, setDataBaseReviews] = useState([])
     const {location } = route.params
+    const [wishFilter, setWishFilter] = useState([])
 
-      const renderLearnMoreItem = ({item}) => {
+    const handleLink = (url) => {
+      Linking.openURL(url);
+    };
+    const renderLearnMoreItem = ({item}) => {
         return (
             <TouchableOpacity onPress={() => handleLink(item.link)}>
-          <ImageBackground
-            source={{uri: item.image}}
-            style={[
-              styles.learnMoreItem,
-              {
-                marginLeft: item.id === 'learnMore-1' ? 20 : 0,
-              },
-            ]}
-            imageStyle={styles.learnMoreItemImage}>
-            <Text style={styles.learnMoreItemText}>{item.title}</Text>
-          </ImageBackground>
-          </TouchableOpacity>
+              <ImageBackground
+                source={{uri: item.image}}
+                style={[
+                  styles.learnMoreItem,
+                  {
+                    marginLeft: item.id === 'learnMore-1' ? 20 : 0,
+                  },
+                ]}
+                imageStyle={styles.learnMoreItemImage}>
+                <Text style={styles.learnMoreItemText}>{item.title}</Text>
+              </ImageBackground>
+           </TouchableOpacity>
 
         );
       };
 
 
+
+
+
       const handleHeart = async () => {
+        // Toggle wishlist state
         setWishlist(!wishlist);
       
-        const tempWish = dataBaseReviews.wishlist || []; // Ensure tempWish is initialized as an array
-       if(wishlist == true){
-                tempWish.push(locations[0].title); // Push new value into the array
-                console.log("Here we are going to console log")
-                console.log(tempWish)
-                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
-            
-                try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                    name: userData[0],
-                    wishlist: tempWish,
-                    }),
-                });
-            
-                if (response.ok) {
-                    const responseData = await response.json();
-                    console.log('Review sent to backend:', responseData);
-                } else {
-                    console.error('Failed to send review to backend');
-                }
-                } catch (error) {
-                console.error('Error sending review to backend:', error);
-                }
-            }
-            else {
-                const updatedWish = tempWish.filter(item => item !== locations[0].title); // Remove 'guam' from the array if wishlist is false
-            
-                const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
-            
-                try {
-                  const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      name: userData[0],
-                      wishlist: updatedWish,
-                    }),
-                  });
-            
-                  if (response.ok) {
-                    const responseData = await response.json();
-                    console.log('Updated wishlist sent to backend:', responseData);
-                  } else {
-                    console.error('Failed to send updated wishlist to backend');
-                  }
-                } catch (error) {
-                  console.error('Error sending updated wishlist to backend:', error);
-                }
-              }
-       }
+        // Check if location is already in wishFilter
+        const isInWishlist = wishFilter.includes(location.title);
+      
+        let updatedWish = [];
+      
+        if (isInWishlist) {
+          // Remove from wishlist if already there
+          updatedWish = wishFilter.filter(item => item !== location.title);
+        } else {
+          // Add to wishlist if not there
+          updatedWish = [...wishFilter, location.title];
+        }
+      
+        // Update wishFilter state
+        setWishFilter(updatedWish);
+      
+        // Update wishlist data in the backend
+        const apiUrl = 'http://143.248.192.155:5000/wishlist'; // Replace with your backend API endpoint
+      
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: userData[0],
+              wishlist: updatedWish, // Send the updatedWish array
+            }),
+          });
+      
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log('Wishlist updated:', responseData);
+          } else {
+            console.error('Failed to update wishlist');
+          }
+        } catch (error) {
+          console.error('Error updating wishlist:', error);
+        }
+      };
 
        const handleMap = () => {
         navigation.navigate('Map', {
@@ -185,6 +178,47 @@ const Details = ({navigation, route}) => {
         setRefresh((prevState) => !prevState);
 
       };
+      const handleWishlist = async () => {
+        const apiUrl = 'http://143.248.192.155:5000/getWishlist'; // Replace with your backend API endpoint
+        
+        try {
+      
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: userData[0]
+            }),
+          });
+      
+          if (response.ok) {
+            // Request was successful
+    
+            const newwaitlist = await response.json();
+            console.log("This is the newwaitlist")
+            setWishFilter(newwaitlist)
+
+    
+            // Handle response data if needed
+    
+          } else {
+            // Handle errors for non-2xx responses
+            console.error('Failed to send review to backend');
+          }
+        } catch (error) {
+          // Handle network errors or other issues
+          console.error('Error sending review to backend:', error);
+        }
+      };
+    
+
+      useFocusEffect(
+        React.useCallback(() => {
+          handleWishlist();
+        }, [])
+      );
      
         const handleReview = async () => {
           const apiUrl = 'http://143.248.192.155:5000/userReviews'; // Replace with your backend API endpoint
@@ -240,7 +274,7 @@ const Details = ({navigation, route}) => {
         
         // Replace this with your desired review component
         <SafeAreaView style={styles.reviewcontainer}>
-        <Text style={styles.reviewtext}>괌 리뷰</Text>
+        <Text style={styles.reviewtext}>{location.title} 리뷰</Text>
             <View style={styles.reviewbox}>
                     <Text style={styles.reviewstar}>
                 {averageReview + '/' + maxRating.length}
@@ -300,7 +334,7 @@ const Details = ({navigation, route}) => {
                         <Text style={{
                             fontSize: 16,
                             color: 'black'
-                        }}>{locations[0].title}에서의 시간이 어땠는지 작성해 보아요!</Text>
+                        }}>{location.title}에서의 시간이 어땠는지 작성해 보아요!</Text>
                     </View>
 
                     <View style={{ marginBottom: 12 }}>
@@ -404,9 +438,23 @@ const Details = ({navigation, route}) => {
         </View>
       </ImageBackground>
       <View style={styles.descriptionWrapper}>
-        <TouchableOpacity style={styles.heartWrapper} onPress={handleHeart}>
+                  
+            <TouchableOpacity
+              style={styles.heartWrapper}
+              onPress={handleHeart}
+            >
+              <Entypo
+                name="heart"
+                size={32}
+                color={
+                  wishFilter.includes(location.title) ? 'red' : 'gray' // Check if location.title is in wishFilter
+                }
+              />
+            </TouchableOpacity>
+
+        {/* <TouchableOpacity style={styles.heartWrapper} onPress={handleHeart}>
           <Entypo name="heart" size={32} color={wishlist ? 'red' : 'gray'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
           <Text style={styles.descriptionText}>{location.title}</Text>
