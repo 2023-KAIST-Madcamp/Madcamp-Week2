@@ -279,29 +279,38 @@ def get_data():
 
     return jsonify(result_list)
 
-@app.route('/userReviews', methods=['GET'])
+@app.route('/userReviews', methods=['POST'])
 def get_reviews():
-    reviews = collection.find({ "review": { "$exists": True, "$ne": "" } })
-    print(reviews)
+    data = request.get_json()
+    location_title = data.get('where')  # Assuming location title is passed in the request
+    print(location_title)
+    # Query MongoDB for documents where the location_title field exists and is not empty
+    reviews = collection.find({ f"{location_title}": { "$exists": True, "$ne": "" } })
+    
     review_list = []  # Convert MongoDB cursor to a list of reviews
     for review in reviews:
         review_list.append({
             'name': review['name'],
-            'review': review['review'],
+            'review': review[f"{location_title}"],
             'star': review['star'],
             'profile_image': review['profile_image'],
             'wish_place': review['wish_places']
         })
-    print("This is the result list!")
-    print(review_list)
+        print("New New Pikachu")
+        print("This is the return ldcdfdfist")
+        print(review_list)
+
     return jsonify(review_list)
 @app.route('/reviewSubmit', methods=['POST'])
 def submit_review():
     user_review = request.get_json()
 
     username = user_review.get('name')
-    review = user_review.get('review')
     star = user_review.get('star')
+   # Get the location title as the key
+    location_review = list(user_review.keys())[1]  # Assuming location.title is the 4th key
+
+    review = user_review.get(location_review)  # Fetch the review text using location title as key
 
      # Check if the username exists in the collection
     existing_user = collection.find_one({'name': username})   
@@ -309,7 +318,7 @@ def submit_review():
         # Update the existing document with the review field
         collection.update_one(
             {'_id': existing_user['_id']},
-            {'$set': {'review': review, 'star': star}}
+            {'$set': {location_review: review, 'star': star}}
         )
         return jsonify({'message': 'Review updawted successfully'})
     else:

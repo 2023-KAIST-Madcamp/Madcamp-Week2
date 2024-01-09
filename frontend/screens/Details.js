@@ -115,11 +115,12 @@ const Details = ({navigation, route}) => {
               }
        }
 
-    
+       const handleMap = () => {
+        navigation.navigate('Map', {
+          famous: location,
+        })}
         
-    const handleMap = () => {
-        navigation.navigate('Map')
-    }
+
     const [displayComponent, setDisplayComponent] = useState('info');
 
 

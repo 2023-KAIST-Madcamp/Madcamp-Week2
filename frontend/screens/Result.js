@@ -43,19 +43,6 @@ function Result({navigation}) {
   };
 
   useEffect(() => {
-    fetch('http://143.248.192.155:5000/userReviews')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setData(json);
-      })
-      .catch((error) => {
-        console.error('Error: ', error);
-      });
 
 
     // Simulate a loading process (fetching data, performing operations, etc.)
@@ -63,6 +50,10 @@ function Result({navigation}) {
       setIsLoading(false); // Set isLoading to false after some time (simulating data fetching)
     }, 2000); // Simulating a 2-second loading time
   }, []);
+
+  const handleProfile = () => {
+    navigation.navigate('Profile')
+  }
 
   useEffect(() => {
     if (!isLoading) {
@@ -88,7 +79,8 @@ function Result({navigation}) {
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <LottieView source={require("../assets/plane.json")} autoPlay loop style={{ height: 80 }} />
             </View>
-            <Button title="프로필 이동!" onPress={handleHome}/>
+            <Button title="프로필 이동!" onPress={handleProfile}/>
+            <Button title="추천 다시 받기!" onPress={handleHome}/>
 
           </View>
 
@@ -101,8 +93,6 @@ function Result({navigation}) {
               showsHorizontalScrollIndicator={false}
             />
           </View> 
-
-          <Button title="추천 다시 받기!" styles={{}} onPress={handleHome}/>
         </View>
         
     );
@@ -141,7 +131,7 @@ function Result({navigation}) {
       },
       discoverItemLocationText: {
         marginLeft: 5,
-        fontFamily: 'Lato-Bold',
+        fontWeight: 'bold',
         fontSize: 14,
       },
    

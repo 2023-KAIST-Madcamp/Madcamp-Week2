@@ -32,7 +32,7 @@ const Login = () => {
         // Handle response data if needed
         console.log('Token sent to backend:', responseData);
         setUserData(responseData); // Store responseData in the context
-        navigation.navigate('Home')
+        navigation.navigate('Profile')
       } else {
         // Handle errors for non-2xx responses
         console.error('Failed to send token to backend');

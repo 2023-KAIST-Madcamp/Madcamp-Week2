@@ -2,24 +2,31 @@ import React, { useRef } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function Map() {
+export default function Map({route}) {
   const mapRef = useRef(null);
+  const {famous } = route.params
+
+  // const initialRegion = {
+  //   latitude: 13.4443,
+  //   longitude: 144.7937,
+  //   latitudeDelta: 0.9,
+  //   longitudeDelta: 0.9,
+  // };
+
 
   const initialRegion = {
-    latitude: 13.4443,
-    longitude: 144.7937,
-    latitudeDelta: 0.9,
-    longitudeDelta: 0.9,
+    latitude: famous.first.coordinate.latitude,
+    longitude: famous.first.coordinate.longitude,
+    latitudeDelta: famous.first.coordinate.latitudeDelta,
+    longitudeDelta: famous.first.coordinate.longitudeDelta,
   };
 
-  const markers = [
-    { id: 1, coordinate: { latitude: 13.4443, longitude: 144.7937 }, title: 'Tuon Beach'},
-    { id: 2, coordinate: { latitude: 13.5028, longitude: 144.7906 }, title: 'Ypao Beach'},
-    { id: 3, coordinate: { latitude: 13.4900, longitude: 144.7819 }, title: 'Guam Premier Outlets'},
-
-    // Add more markers as needed
-  ];
-
+  const markers = famous.famous.map((item, index) => ({
+    id: index + 1,
+    coordinate: { latitude: item.coordinate.latitude, longitude: item.coordinate.longitude },
+    title: item.title,
+    // Add other properties as needed from famous.famous
+  }));
   const handleZoomToCoordinates = (lat, long) => {
 
     console.log(lat)

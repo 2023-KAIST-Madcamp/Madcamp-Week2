@@ -10,6 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors';
 import locations from '../assets/locations'
 import learnMoreData from '../assets/learnMoreData';
+import location from '../assets/locations'
 
 const height = Dimensions.get('window').height;
 Feather.loadFont();
@@ -20,7 +21,10 @@ function Profile({ navigation }) {
 
   const renderLearnMoreItem = ({item}) => {
     return (
-        <TouchableOpacity onPress={() => handleLink(item.link)}>
+        <TouchableOpacity onPress={() =>
+          navigation.navigate('Details', {
+            location: item,
+          })}>
       <ImageBackground
         source={{uri: item.image}}
         style={[
@@ -30,12 +34,20 @@ function Profile({ navigation }) {
           },
         ]}
         imageStyle={styles.learnMoreItemImage}>
+           {/* Heart icon */}
+        <View style={styles.heartIconContainer}>
+        <Entypo name="heart" size={20} color={ 'red'} />
+        </View>
         <Text style={styles.learnMoreItemText}>{item.title}</Text>
       </ImageBackground>
       </TouchableOpacity>
 
     );
   };
+
+  const handleStart = () => {
+    navigation.navigate('Question')
+  }
 
   return (
 <View style={styles.container}>
@@ -57,42 +69,43 @@ function Profile({ navigation }) {
         </View>
       </ImageBackground>
       <View style={styles.descriptionWrapper}>
-    
-        <View style={styles.descriptionTextWrapper}>
+                    <TouchableOpacity
+                            style={styles.buttonWrapper}
+                            onPress={handleStart}>
+                            <Text style={styles.buttonText}>여행지 추천 받기!</Text>
+                        </TouchableOpacity>
+              <Text style={styles.descriptionTitle}>Discovery</Text>
+              <View style={styles.discoverItemsWrapper}>
+                          <FlatList
+                            data={location}
+                            renderItem={renderLearnMoreItem}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                          />
+                </View> 
           <Text style={styles.descriptionTitle}>Wish List</Text>
-          <View style={styles.learnMoreWrapper}>
-            
-            <View style={styles.learnMoreItemsWrapper}>
-              <FlatList
-                data={learnMoreData}
-                renderItem={renderLearnMoreItem}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
-          </View>
+          <View style={styles.discoverItemsWrapper}>
+                          <FlatList
+                            data={location}
+                            renderItem={renderLearnMoreItem}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                          />
+                </View> 
         </View>
 
-        <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Visited Lists</Text>
-          <View style={styles.learnMoreWrapper}>
-            
-            <View style={styles.learnMoreItemsWrapper}>
-              <FlatList
-                data={learnMoreData}
-                renderItem={renderLearnMoreItem}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
-          </View>
-        </View>
-
-      
-        </View>
-
+          <View style={styles.discoverItemsWrapper}>
+                          <FlatList
+                            data={location}
+                            renderItem={renderLearnMoreItem}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                          />
+                </View> 
 
       </ScrollView>
     </View>
@@ -102,6 +115,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  buttonWrapper: {
+    marginHorizontal: 20,
+    marginTop: 40,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: colors.white,
+  },
+  heartIconContainer: {
+    position: 'absolute',
+    top: 10, // Adjust as needed to position the heart icon
+    right: 10, // Adjust as needed to position the heart icon
+    zIndex: 1, // Ensure it's above the image
+    // Additional styling for the heart icon container
   },
   backgroundImage: {
     height: height * 0.3,
@@ -159,10 +191,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginHorizontal: 20,
   },
+  discoverItemsWrapper: {
+    paddingVertical: 20,
+    paddingHorizontal: 20
+  },
   descriptionTitle: {
     fontSize: 24,
     color: 'black',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginLeft: 15
   },
   descriptionText: {
     marginTop: 20,
@@ -244,7 +282,7 @@ const styles = StyleSheet.create({
   },
   learnMoreItemText: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 28,
     color: 'white',
     marginHorizontal: 10,
     marginVertical: 20,
