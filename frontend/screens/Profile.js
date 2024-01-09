@@ -157,7 +157,7 @@ function Profile({ navigation }) {
                 </View> 
         </View>
           {/* This is the visited place tab */}
-          <Text style={styles.descriptionTitle}>Visited Lists</Text>
+          {/* <Text style={styles.descriptionTitle}>Visited Lists</Text>
           <View style={styles.discoverItemsWrapper}>
                           <FlatList
                             data={locations}
@@ -166,7 +166,7 @@ function Profile({ navigation }) {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                           />
-                </View> 
+                </View>  */}
 
       </ScrollView>
     </View>

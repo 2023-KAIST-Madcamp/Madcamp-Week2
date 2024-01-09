@@ -13,11 +13,10 @@ import Login from './screens/Login';
 import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
-import Start from './screens/Start'
-import StartMain from './screens/StartMain'
 import Map from './screens/Map'
 import RecoQuestion from './screens/RecoQuestion';
-
+import Start from './screens/Start';
+import StartMain from './screens/StartMain';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,13 +25,20 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <DataProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+      <NavigationContainer >
+        <Stack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
           <Stack.Screen name = "Home" component={Home} options={{ headerShown: false }}/>
           <Stack.Screen name = "Details" component={Details} options={{ headerShown: false }}/>
-          <Stack.Screen name = "Login" component={Login}/>
-          <Stack.Screen name = "Start" component={Start}/>
-          <Stack.Screen name = "StartMain" component={StartMain}/>
+          <Stack.Screen name = "Login" component={Login} options={{ headerShown: false }}/>
+          <Stack.Screen name = "Start" component={Start} options={{ headerShown: false }}/>
+          <Stack.Screen name = "StartMain" component={StartMain}
+            options={{
+              transitionSpec: {
+                open: { animation: 'timing', config: { duration: 500 } },
+                close: { animation: 'timing', config: { duration: 500 } },
+              },
+            }}
+          />
           <Stack.Screen name = "Profile" component={Profile} options={{ headerShown: false }}/>
           <Stack.Screen name = "Question" component={Question} />
           <Stack.Screen name = "Result" component={Result}options={{ headerShown: false }}/>

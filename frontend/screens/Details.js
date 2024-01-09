@@ -450,11 +450,8 @@ const Details = ({navigation, route}) => {
                   wishFilter.includes(location.title) ? 'red' : 'gray' // Check if location.title is in wishFilter
                 }
               />
-            </TouchableOpacity>
+          </TouchableOpacity>
 
-        {/* <TouchableOpacity style={styles.heartWrapper} onPress={handleHeart}>
-          <Entypo name="heart" size={32} color={wishlist ? 'red' : 'gray'} />
-        </TouchableOpacity> */}
         <View style={styles.descriptionTextWrapper}>
           <Text style={styles.descriptionTitle}>Description</Text>
           <Text style={styles.descriptionText}>{location.title}</Text>
