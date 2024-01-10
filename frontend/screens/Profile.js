@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Button, StyleSheet, TouchableOpacity, ScrollView,  
   ImageBackground,
-  Dimensions,  FlatList,
+  Dimensions,  FlatList, Image
 
    } from 'react-native';
 import { useData } from '../context/DataContext';
@@ -113,12 +113,15 @@ function Profile({ navigation }) {
          <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
-      <ImageBackground source={{uri: userData[1]}} style={styles.backgroundImage}>
+      <ImageBackground source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAA1BMVEUaLmGHeUOeAAAASElEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIC3AcUIAAFkqh/QAAAAAElFTkSuQmCC'}} style={styles.backgroundImage}>
         <TouchableOpacity
           style={styles.backIcon}
           onPress={() => navigation.goBack()}>
           <Entypo name="chevron-left" size={32} color={colors.white} />
         </TouchableOpacity>
+        <View style={styles.imageWrapper}>
+        <Image style={styles.circularImage} source={{ uri: userData[1] }} />
+      </View>
         <View style={styles.titlesWrapper}>
           <Text style={styles.itemTitle}>{userData[0]}</Text>
           <View style={styles.locationWrapper}>
@@ -197,7 +200,7 @@ const styles = StyleSheet.create({
     // Additional styling for the heart icon container
   },
   backgroundImage: {
-    height: height * 0.3,
+    height: height * 0.5,
     justifyContent: 'space-between',
     
   },
@@ -214,7 +217,20 @@ const styles = StyleSheet.create({
   titlesWrapper: {
     marginHorizontal: 20,
     marginBottom: 40,
-    marginLeft: 230
+    marginLeft: 30
+  }, imageWrapper: {
+    marginHorizontal: 20,
+    marginBottom: 0,
+    marginLeft: 20,
+    height: 100,
+    marginTop: 80,
+    borderRadius: 50, // half of the desired height for a perfect circle
+    overflow: 'hidden', // hides any overflow beyond the borderRadius
+  },
+  circularImage: {
+    height: 100,
+    width: 100, // Ensure the width and height are equal to create a circular image
+    borderRadius: 50, // half of the desired height for a perfect circle
   },
   itemTitle: {
     fontSize: 32,

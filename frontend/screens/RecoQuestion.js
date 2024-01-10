@@ -11,11 +11,9 @@ export default function RecoQuestion() {
   const [responseList, setResponseList] = useState([[0,0,0,0,0,0],[0,0,0,0],[0,0],[0,0,0,0],[0,0],[0,0],[0,0],[0,0],[0,0],
   [0,0],[0,0],[0,0],])  
 
-  const [active, setActive] = useState(true)
-
   const handleClick = (qNum, answer) => {
     updateResponse(qNum, answer)
-    // setActive(!active)
+
   }
 
   const questionResults = async () => {
@@ -54,7 +52,12 @@ export default function RecoQuestion() {
       });
     }
   }
-    console.log(responseList)
+
+  // const handleButtonState = qNum => {
+  //   const updatedButtonState = buttonState.map((state, index) => index === qNum - 1);
+  //   setButtonState(updatedButtonState);
+  // };
+  //   console.log(responseList)
 
     
   return (
@@ -66,66 +69,68 @@ export default function RecoQuestion() {
 {/* Q1 */}
 <View style={styles.question}>
 <View style={styles.q1Parent}>
-        <View style={[styles.q1, styles.q1ShadowBox]}>
+<View style={[styles.q1, styles.q1ShadowBox]}>
           <Text style={[styles.q11, styles.q11Typo]}>Q1.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             당신의 연령대를 알려주세요
           </Text>
           <View style={[styles.frameParent, styles.frameParentFlexBox]}>
             <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,1)}>
+              <TouchableOpacity onPress = {() => handleClick(1, 1)}  style={[styles.rectangleParent, styles.rectanglePosition]}>
                 <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_1.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
+                <Text onPress = {() => handleClick(1, 2)}  style={[styles.text1, styles.textTypo2,  {color: responseList[0][0] == 1 ? 'black': 'white'}]}>20세 이하</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,2)}>
-              <Image
+              <TouchableOpacity style={[styles.rectangleGroup, styles.rectanglePosition]}>
+                <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_3.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
+                <Text style={[styles.text1, styles.textTypo2,  {color: responseList[0][1] == 1 ? 'black': 'white'}]}>30~40세</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,3)}>
-
+              <TouchableOpacity onPress = {() => handleClick(1, 3)} 
+                style={[styles.rectangleContainer, styles.rectanglePosition]}
+              >
                 <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_5.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>50~60세</Text> */}
+                <Text style={[styles.text1, styles.textTypo2,  {color: responseList[0][2] == 1 ? 'black': 'white'}]}>50~60세</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.frameContainer}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,4)}>
-              <Image
+              <TouchableOpacity onPress = {() => handleClick(1, 4)} >
+                <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_2.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20~30세</Text> */}
+                <Text style={[styles.text1, styles.textTypo2,  {color: responseList[0][3] == 1 ? 'black': 'white'}]}>20~30세</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,5)}>
-              <Image
+              <TouchableOpacity onPress = {() => handleClick(1, 5)}  style={styles.rectangleParent1}>
+                <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_4.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>40~50세</Text> */}
+                <Text style={[styles.text1, styles.textTypo2,  {color: responseList[0][4] == 1 ? 'black': 'white'}]}>40~50세</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(1,6)}>
-              <Image
+              <TouchableOpacity onPress = {() => handleClick(1, 6)}  style={styles.rectangleParent1}>
+                <Image
                   style={styles.frameChild}
                   contentFit="cover"
                   source={require("../assets/q1_6.png")}
                 />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>60세 이상</Text> */}
-              </TouchableOpacity>
+                <Text style={[styles.text1, styles.textTypo2,  {color: responseList[0][5] == 1 ? 'black': 'white'}]}>60세 이상</Text>
+
+            </TouchableOpacity>
             </View>
-          </View>
+            </View>
         </View>
         </View>  
 
@@ -137,43 +142,46 @@ export default function RecoQuestion() {
           <Text style={[styles.text, styles.textTypo3]}>
             1인 예산 계획이 어떻게 되나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(2,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(2,2)}>
+          <View style={styles.frameParent1}>
+            <View style={[styles.rectangleParent, styles.rectanglePosition]}>
+              {/* 2-1 */}
+              <TouchableOpacity onPress = {() => handleClick(2, 1)} style={{opacity: responseList[1][0] == 1 ? 0.5:  1}}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
+                style={[styles.frameChild3, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q2_1.png")}
+              />
               </TouchableOpacity>
-
+              {/* 2-2 */}
+              <TouchableOpacity onPress = {() => handleClick(2, 2)} style={{opacity: responseList[1][1] == 1 ? 0.5:  1}}>
+              <Image
+                style={[styles.frameChild4, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q2_2.png")}
+              />
+              </TouchableOpacity>
+              <Text style={[styles.text8, styles.textTypo2,  {color: responseList[1][0] == 1 ? 'black': 'white'}]}>~50만원</Text>
+              <Text style={[styles.text9, styles.textTypo1,  {color: responseList[1][1] == 1 ? 'black': 'white'}]}>50~100만원</Text>
             </View>
-            <View style={styles.frameContainer}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(2,3)}>
+            <View style={styles.rectangleParent4}>
+              {/* 2-3 */}
+              <TouchableOpacity onPress = {() => handleClick(2, 3)} style={{opacity: responseList[1][2] == 1 ? 0.5:  1}}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_2.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20~30세</Text> */}
+                style={[styles.frameChild3, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q2_3.png")}
+              />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(2,4)}>
+              {/* 2-4 */}
+              <TouchableOpacity onPress = {() => handleClick(2, 4)} style={{opacity: responseList[1][3] == 1 ? 0.5:  1 }}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_4.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>40~50세</Text> */}
+                style={[styles.frameChild4, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q2_4.png")}
+              />
               </TouchableOpacity>
+              <Text style={[styles.text8, styles.textTypo2, {color: responseList[1][2] == 1 ? 'black': 'white'}]}>100~150만원</Text>
+              <Text style={[styles.text11, styles.textTypo1 , {color: responseList[1][3] == 1 ? 'black': 'white'}]}>150만원~</Text>
             </View>
           </View>
         </View>
@@ -186,78 +194,74 @@ export default function RecoQuestion() {
           <Text style={[styles.text, styles.textTypo3]}>
             당신의 성별이 무엇인가요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(3,1)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-            <View style={styles.frameContainer}>
-            
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(3,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_4.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>40~50세</Text> */}
-              </TouchableOpacity>
-            </View>
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(3, 1)} style={{opacity: responseList[2][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q3_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(3, 2)} style={{opacity: responseList[2][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q3_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,   {color: responseList[2][0] == 1 ? 'black': 'white'}]}>남자</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[2][1] == 1 ? 'black': 'white'}]}>여자</Text>
         </View>
         </View>  
 
         {/* Q4 */}
-        <View style={styles.q1Parent}>
+<View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
           <Text style={[styles.q11, styles.q11Typo]}>Q4.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             누구와 가나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(4,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(4,2)}>
+          <View style={styles.frameParent1}>
+            <View style={[styles.rectangleParent, styles.rectanglePosition]}>
+              {/* 2-1 */}
+              <TouchableOpacity onPress = {() => handleClick(4, 1)} style={{opacity: responseList[3][0] == 1 ? 0.5:  1}}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
+                style={[styles.frameChild3, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q4_1.png")}
+              />
               </TouchableOpacity>
-
+              {/* 2-2 */}
+              <TouchableOpacity onPress = {() => handleClick(4, 2)} style={{opacity: responseList[3][1] == 1 ? 0.5:  1}}>
+              <Image
+                style={[styles.frameChild4, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q4_2.png")}
+              />
+              </TouchableOpacity>
+              <Text style={[styles.text8, styles.textTypo2, {color: responseList[3][0] == 1 ? 'black': 'white'}]}>혼자</Text>
+              <Text style={[styles.text9, styles.textTypo1, {color: responseList[3][1] == 1 ? 'black': 'white'}]}>가족과</Text>
             </View>
-            <View style={styles.frameContainer}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(4,3)}>
+            <View style={styles.rectangleParent4}>
+              {/* 2-3 */}
+              <TouchableOpacity onPress = {() => handleClick(4, 3)} style={{opacity: responseList[3][2] == 1 ? 0.5:  1}}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_2.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20~30세</Text> */}
+                style={[styles.frameChild3, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q4_3.png")}
+              />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(4,4)}>
+              {/* 2-4 */}
+              <TouchableOpacity onPress = {() => handleClick(4, 4)} style={{opacity: responseList[3][3] == 1 ? 0.5:  1}}>
               <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_4.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>40~50세</Text> */}
+                style={[styles.frameChild4, styles.childFrameLayout]}
+                contentFit="cover"
+                source={require("../assets/q4_4.png")}
+              />
               </TouchableOpacity>
+              <Text style={[styles.text8, styles.textTypo2,  {color: responseList[3][2] == 1 ? 'black': 'white'}]}>친구들과</Text>
+              <Text style={[styles.text11, styles.textTypo1,  {color: responseList[3][3] == 1 ? 'black': 'white'}]}>사랑하는 사람과</Text>
             </View>
           </View>
         </View>
@@ -265,251 +269,221 @@ export default function RecoQuestion() {
         {/* Q5 */}
         <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q5.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q5.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             어떤 기후를 선호하나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(5,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(5,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(5, 1)} style={{opacity: responseList[4][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q5_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(5, 2)} style={{opacity: responseList[4][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q5_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[4][0] == 1 ? 'black': 'white'}]}>따뜻한 기후</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[4][1] == 1 ? 'black': 'white'}]}>시원한 기후</Text>
         </View>
         </View>  
+
+       
 
          {/* Q6 */}
          <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q6.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q6.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             어떤 환경을 선호하나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(6,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(6,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(6, 1)} style={{opacity: responseList[5][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q6_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(6, 2)} style={{opacity: responseList[5][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q6_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[5][0] == 1 ? 'black': 'white'}]}>활기찬 도시</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[5][1] == 1 ? 'black': 'white'}]}>평화로운 자연</Text>
         </View>
         </View>  
  {/* Q7 */}
  <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q7.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q7.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             관광 vs 휴양?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(7,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(7,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(7, 1)} style={{opacity: responseList[6][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q7_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(7, 2)} style={{opacity: responseList[6][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q7_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[6][0] == 1 ? 'black': 'white'}]}>관광</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[6][1] == 1 ? 'black': 'white'}]}>휴양</Text>
         </View>
         </View>  
          {/* Q8 */}
         <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q8.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q8.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             관광객이 많은 곳을 선호하나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(8,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(8,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(8, 1)} style={{opacity: responseList[7][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q8_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(8, 2)} style={{opacity: responseList[7][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q8_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[7][0] == 1 ? 'black': 'white'}]}>그렇다</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[7][1] == 1 ? 'black': 'white'}]}>아니다</Text>
         </View>
         </View>  
 
          {/* Q9 */}
          <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q9.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q9.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             대중교통을 중요시하나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(9,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(9,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(9, 1)} style={{opacity: responseList[8][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q9_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(9, 2)} style={{opacity: responseList[8][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q9_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[8][0] == 1 ? 'black': 'white'}]}>그렇다</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[8][1] == 1 ? 'black': 'white'}]}>아니다</Text>
         </View>
         </View>  
          {/* Q10 */}
          <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q10.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q10.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             유적지나 문화체험을 선호하나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(10,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(10,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(10, 1)} style={{opacity: responseList[9][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q10_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(10, 2)} style={{opacity: responseList[9][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q10_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[9][0] == 1 ? 'black': 'white'}]}>그렇다</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[9][1] == 1 ? 'black': 'white'}]}>아니다</Text>
         </View>
         </View> 
          {/* Q11 */}
          <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q11.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q11.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             액티비티를 즐기나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(11,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(11,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(11, 1)} style={{opacity: responseList[10][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q11_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(11, 2)} style={{opacity: responseList[10][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q11_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[10][0] == 1 ? 'black': 'white'}]}>그렇다</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[10][1] == 1 ? 'black': 'white'}]}>아니다</Text>
         </View>
         </View>   
          {/* Q12 */}
          <View style={styles.q1Parent}>
         <View style={[styles.q1, styles.q1ShadowBox]}>
-          <Text style={[styles.q11, styles.q11Typo]}>Q12.</Text>
+        <Text style={[styles.q11, styles.q11Typo]}>Q12.</Text>
           <Text style={[styles.text, styles.textTypo3]}>
             쇼핑을 즐기나요?
           </Text>
-          <View style={[styles.frameParent, styles.frameParentFlexBox]}>
-            <View style={styles.frameGroup}>
-            <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(12,1)}>
-                <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_1.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>20세 이하</Text> */}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rectangleParent1} onPress={() => handleClick(12,2)}>
-              <Image
-                  style={styles.frameChild}
-                  contentFit="cover"
-                  source={require("../assets/q1_3.png")}
-                />
-                {/* <Text style={[styles.text1, styles.textTypo2]}>30~40세</Text> */}
-              </TouchableOpacity>
-
-            </View>
-
-          </View>
+          {/* 3-1 */}
+          <TouchableOpacity onPress = {() => handleClick(12, 1)} style={{opacity: responseList[11][0] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Child, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q12_1.png")}
+          />
+          </TouchableOpacity>
+          {/* 3-2 */}
+          <TouchableOpacity onPress = {() => handleClick(12, 2)} style={{opacity: responseList[11][1] == 1 ? 0.5:  1}}>
+          <Image
+            style={[styles.q3Item, styles.childFrameLayout]}
+            contentFit="cover"
+            source={require("../assets/q12_2.png")}
+          />
+          </TouchableOpacity>
+          <Text style={[styles.text13, styles.textTypo,  {color: responseList[11][0] == 1 ? 'black': 'white'}]}>그렇다</Text>
+          <Text style={[styles.text14, styles.textTypo,  {color: responseList[11][1] == 1 ? 'black': 'white'}]}>아니다</Text>
         </View>
 
         
@@ -602,6 +576,8 @@ const styles = StyleSheet.create({
       textAlign: "left",
       fontWeight: "700",
       position: "absolute",
+      color: Color.colorWhite,
+
     },
     textTypo: {
       left: 23,
@@ -728,5 +704,24 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       marginTop: 25,
     },
+    q3Child: {
+      zIndex: 2,
+      width: 317,
+      marginTop: 7,
+    },
+    q3Item: {
+      zIndex: 3,
+      width: 317,
+      marginTop: 10,
+    },
+    text13: {
+      top: 132,
+      zIndex: 4,
+    },
+    text14: {
+      top: 228,
+      zIndex: 5,
+    },
+
 
   });

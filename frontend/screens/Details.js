@@ -28,7 +28,7 @@ Entypo.loadFont();
 const Details = ({navigation, route}) => {
     const [refresh, setRefresh] = useState(false); // State to trigger re-render
     const { userData } = useData(); // Get setUserData from context
-    const [averageReview, setAverageReview] = useState(4);
+    const [averageReview, setAverageReview] = useState(0);
     const [reviewText, setReviewText] = useState(''); // State to store review text
     const [wishlist, setWishlist] = useState(false)
     const [submittedReviews, setSubmittedReviews] = useState([]); // State to store submitted reviews
@@ -131,7 +131,7 @@ const Details = ({navigation, route}) => {
           </View>
         </View>
     );
-    const [defaultRating, setdefaultRating] = useState(4)
+    const [defaultRating, setdefaultRating] = useState(2)
     const [MydefaultRating, setMydefaultRating] = useState(5)
     const [maxRating, setmaxRating] = useState([1,2,3,4,5])
 
@@ -164,6 +164,44 @@ const Details = ({navigation, route}) => {
             // Handle response data if needed
             console.log('Review sent to backend:', responseData);
             alert('리뷰 등록되었습니다!');
+            setSubmittedReviews([...submittedReviews, { review: reviewText, star: MydefaultRating }]);
+
+
+          } else {
+            // Handle errors for non-2xx responses
+            console.error('Failed to send review to backend');
+          }
+        } catch (error) {
+          // Handle network errors or other issues
+          console.error('Error sending review to backend:', error);
+        }
+        setRefresh((prevState) => !prevState);
+
+      };
+      const handleDelete = async () => {
+        const apiUrl = 'http://143.248.192.155:5000/reviewSubmit'; // Replace with your backend API endpoint
+        
+        try {
+
+          console.log('This is the handleDelete function entry');
+      
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: userData[0],
+              [location.title] : reviewText,
+              star: MydefaultRating
+            }),
+          });
+      
+          if (response.ok) {
+            // Request was successful
+            const responseData = await response.json();
+            // Handle response data if needed
+            console.log('Review sent to backend:', responseData);
             setSubmittedReviews([...submittedReviews, { review: reviewText, star: MydefaultRating }]);
 
 
@@ -219,6 +257,12 @@ const Details = ({navigation, route}) => {
           handleWishlist();
         }, [])
       );
+
+      const clearReviewText = () => {
+        setReviewText(''); // Sets the reviewText state to an empty string
+        handleDelete()
+        
+      };
      
         const handleReview = async () => {
           const apiUrl = 'http://143.248.192.155:5000/userReviews'; // Replace with your backend API endpoint
@@ -265,11 +309,29 @@ const Details = ({navigation, route}) => {
       }, [refresh]);
 
       useEffect(() => {
+        let sum = 0
+        let counter = 1
+        console.log("This is the database reviews")
+        console.log(dataBaseReviews)
+        for(let i = 0 ; i < dataBaseReviews.length; i++){
+
+
+          if(dataBaseReviews[i].star > 0){
+            console.log(dataBaseReviews[i])
+            sum += dataBaseReviews[i].star
+            console.log(sum)
+            setAverageReview(sum / counter)
+            counter++;
+          }
+        }
         renderReviewComponent()
       }, [dataBaseReviews])
 
 
     const renderReviewComponent = () => (
+
+      
+      
 
         
         // Replace this with your desired review component
@@ -305,8 +367,7 @@ const Details = ({navigation, route}) => {
                             fontWeight: 'bold',
                             marginVertical: 12,
                             color: 'black'
-                        }}>
-                            나의 리뷰 작성하기
+                        }}>나의 리뷰 작성하기
                         </Text>
                             <View style={styles.mybox}>
                                 <Text style={styles.mystar}>
@@ -329,6 +390,9 @@ const Details = ({navigation, route}) => {
                                         </TouchableOpacity>
                                     ))}
                                     </View> 
+                                    <TouchableOpacity onPress={() => clearReviewText()}>
+                                      <Entypo name="trash" size={20}  style={{marginLeft: 140}}/>
+                                    </TouchableOpacity>
                             </View>
 
                         <Text style={{
@@ -370,8 +434,10 @@ const Details = ({navigation, route}) => {
             </View>
             <View style={{ marginTop: 20, marginHorizontal: 22 }}>
       <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 10 }}>Submitted Reviews</Text>
-      {dataBaseReviews.map((review, index) => (        
+      {dataBaseReviews.map((review, index) => (    
+            
         <View key={index} style={{ marginBottom: 20 }}>
+          {}
           <View style={styles.mybox}>
                                 <Text style={styles.mystar}>
                             {review.star + '/' + maxRating.length}

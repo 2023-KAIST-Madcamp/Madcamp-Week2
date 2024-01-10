@@ -10,7 +10,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './screens/Home';
 import Details from './screens/Details';
 import Login from './screens/Login';
-import Question from './screens/Question';
 import Profile from './screens/Profile'
 import Result from './screens/Result'
 import Map from './screens/Map'
@@ -40,7 +39,6 @@ function App() {
             }}
           />
           <Stack.Screen name = "Profile" component={Profile} options={{ headerShown: false }}/>
-          <Stack.Screen name = "Question" component={Question} />
           <Stack.Screen name = "Result" component={Result}options={{ headerShown: false }}/>
           <Stack.Screen name = "RecoQuestion" component={RecoQuestion} />
           <Stack.Screen name = "Map" component={Map}/>
