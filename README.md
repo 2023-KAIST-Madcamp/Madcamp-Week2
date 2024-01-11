@@ -1,7 +1,5 @@
 # FindMyTrip
 
-# FindMyTrip
-
 ### KAIST MadCamp Week2
 
 ---
