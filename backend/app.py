@@ -11,13 +11,13 @@ app = Flask(__name__)
 CORS(app)
 ca = certifi.where()
 # Connect to MongoDB
-client = MongoClient('mongodb+srv://jjpark57:baseball101@cluster0.hsrsouo.mongodb.net/', tlsCAFile = ca)  # Replace with your MongoDB connection string
+client = MongoClient('', tlsCAFile = ca)  # Replace with your MongoDB connection string
 # print('this is client')
 # print(client)
-db = client['mytrip']  # Replace 'your_database' with your database name
+db = client['']  # Replace 'your_database' with your database name
 # print('this is db')
 # print(db)
-collection = db['flask']  # Replace 'your_collection' with your collection name
+collection = db['']  # Replace 'your_collection' with your collection name
 # print('this is collection')
 # print(collection)
 
