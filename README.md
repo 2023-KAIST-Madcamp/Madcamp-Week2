@@ -27,7 +27,7 @@
 
 ### 1. 로딩창
 
-![StartPage.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/58c674d9-3be9-4b6f-9832-a79e975a848e/StartPage.png)
+![StartPage](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/1c8d2dd4-6c1f-44c2-b711-829166011ada)
 
 ### 주요 특징
 
@@ -35,9 +35,9 @@
 
 ### 2. 메인화면
 
-![Profile.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/f2637b02-a17c-4b4a-9253-22cdc5ceaec5/Profile.png)
+![Profile](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/f73a9a27-7e0e-4b7e-a305-65fccdfc1232)
 
-![Wishlist.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/a38a0b18-2861-4721-8be0-376427cb006b/Wishlist.png)
+![Wishlist](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/d8389324-22f5-4e63-8b8b-178666c50de4)
 
 ### 주요 특징
 
@@ -49,7 +49,7 @@
 
 ### 3. 질문 페이
 
-![Question.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/af52fafd-ed3f-4418-b1da-51432c84c927/Question.png)
+![Question](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/e28b0382-dd71-43de-ad1d-9b2347fc0869)
 
 ### 주요 특징
 
@@ -59,7 +59,7 @@
 
 ### 4. 추천 페이지
 
-![Result.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/19995971-86e1-4d9f-a1a1-feabf9790e9f/Result.png)
+![Result](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/1062703a-459c-4722-8044-565f8dc5882c)
 
 ### 주요 특징
 
@@ -74,7 +74,7 @@
 
 ### (1) 명소
 
-![Detail-touristspot.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/d3092aeb-fb12-4644-b5a3-50e20c40685b/Detail-touristspot.png)
+![Detail-touristspot](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/8accf69b-e141-46ab-9895-572cf9d44065)
 
 ### 주요 특징
 
@@ -83,7 +83,7 @@
 
 ### (2) 리뷰
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/f4774e04-71ed-4592-b846-839e1fdafed1/Untitled.png)
+![Detail-review](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/f53315a1-4800-4332-928b-4f720f944100)
 
 ### 주요 특징
 
@@ -93,9 +93,9 @@
 
 ### (3) 위치
 
-![Detail-map.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/0dc0b092-8efd-48af-95e7-e985d2aaf9ff/Detail-map.png)
+![Detail-map](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/aed31a6f-76cd-44e6-8bfc-ad16bee1cd65)
 
-![Route.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/af753fa7-aa63-41e3-aad5-cf994a65ddd8/Route.png)
+![Route](https://github.com/KAIST-MadCamp-Week2/TravelApp/assets/149778119/99bebfd8-2dbc-4a2e-b125-8bac3f9ac519)
 
 ### 주요기능
 
